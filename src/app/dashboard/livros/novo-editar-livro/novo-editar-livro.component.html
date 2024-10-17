@@ -72,10 +72,38 @@
                     <div class="form-group">          
                       <label>Título <i class="icon-companies"></i></label>
                       <div class="text-title">             
-                        <h4>{{assunto.titulo}}</h4>
+                        <h4>{{livro.titulo}}</h4>
                       </div>                     
                     </div>
                   </div>
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">          
+                      <label>Editora <i class="icon-companies"></i></label>
+                      <div class="text-title">             
+                        <h4>{{livro.editora}}</h4>
+                      </div>                     
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">          
+                      <label>Edição <i class="icon-companies"></i></label>
+                      <div class="text-title">             
+                        <h4>{{livro.edicao}}</h4>
+                      </div>                     
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">          
+                      <label>Ano Publicação <i class="icon-companies"></i></label>
+                      <div class="text-title">             
+                        <h4>{{livro.anoPublicacao}}</h4>
+                      </div>                     
+                    </div>
+                  </div>
+
                 </div>   
 
 
@@ -162,8 +190,20 @@
 
 
                 <div class="row border rounded p-3 mb-3" *ngIf="action == 'Detalhes do Livro'">
-                        
+                  <div class="table-responsive" *ngIf="livro?.assuntos.length > 0">
+          
+                    <table class="table border-top-0">                      
+                      <tbody>
+                        <tr
+                          *ngFor="let item of livro.assuntos">                                                    
+                          <td>{{item.descricao | titlecase}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                  </div>
                 </div>   
+
               </ng-template>
             </li>  
             
@@ -179,10 +219,20 @@
 
 
 
-                <div class="row border rounded p-3 mb-3" *ngIf="action == 'Detalhes do Livro'">              
-                         
+                <div class="row border rounded p-3 mb-3" *ngIf="action == 'Detalhes do Livro'">
+                  <div class="table-responsive" *ngIf="livro?.autores.length > 0">
+          
+                    <table class="table border-top-0">                      
+                      <tbody>
+                        <tr
+                          *ngFor="let item of livro.autores">                                                    
+                          <td>{{item.nome | titlecase}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
 
-                </div>  
+                  </div>
+                </div>   
 
               </ng-template>
             </li>  

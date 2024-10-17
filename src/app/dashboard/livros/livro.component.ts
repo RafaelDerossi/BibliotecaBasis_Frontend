@@ -95,7 +95,7 @@ export class LivroComponent implements OnInit {
 
   }
 
-  detalhesAssunto(livro: Livro) {
+  detalhesLivro(livro: Livro) {
     const modalRef =  this.modal.open(NovoEditarLivroComponent, { backdrop: 'static', size: 'xl' });        
     modalRef.componentInstance.backgroundStorageSelected = this.backgroundStorageSelected;    
     modalRef.componentInstance.actionRequested = 'Detalhes do Livro';    

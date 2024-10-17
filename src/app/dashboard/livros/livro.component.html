@@ -60,6 +60,10 @@
                         <tr>
                           <th scope="col">Título</th>
                           <th scope="col">Editora</th>
+                          <th scope="col">Edição</th>
+                          <th scope="col">Ano Publicação</th>
+                          <th scope="col">Autores</th>
+                          <th scope="col">Assuntos</th>
                           <th scope="col" class="text-center">Ação</th>
                         </tr>
                       </thead>
@@ -68,6 +72,18 @@
                           *ngFor="let item of livrosCopy | slice: (currentPage-1) * itemsPerPage : (currentPage-1) * itemsPerPage + itemsPerPage">                                                    
                           <td>{{item?.titulo | titlecase}}</td>
                           <td>{{item?.editora | titlecase}}</td>
+                          <td>{{item?.edicao}}</td>
+                          <td>{{item?.anoPublicacao}}</td>
+                          <td>
+                            <ng-container *ngFor="let autor of item?.autores">
+                              {{autor?.nome}};
+                            </ng-container>
+                          </td>
+                          <td>
+                            <ng-container *ngFor="let assunto of item?.assuntos">
+                              {{assunto?.descricao}};
+                            </ng-container>
+                          </td>
                           <td align="center">
                             <button type="button" class="btn btn-sm btn-primary mb-1" (click)="detalhesLivro(item)">
                               <span *ngIf="!loading"><i class="icon-eye"></i></span>
