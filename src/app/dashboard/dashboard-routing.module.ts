@@ -25,8 +25,8 @@ const routes: Routes = [
         loadChildren: () => import('./autores/autor.module').then(module => module.AutorModule),
       },
       {
-        path: 'gestao-produtos',
-        loadChildren: () => import('./gestao-produtos/gestao-produtos.module').then(module => module.GestaoProdutosModule),
+        path: 'livro',
+        loadChildren: () => import('./livros/livro.module').then(module => module.LivroModule),
       }
     ]
   }

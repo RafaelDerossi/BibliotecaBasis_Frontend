@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { ViaCep } from '../../interfaces/viacep';
 import { environment } from 'src/environments/environment';
 import { ToastrService, } from 'ngx-toastr';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';

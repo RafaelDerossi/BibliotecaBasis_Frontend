@@ -53,7 +53,7 @@ export class SidebarComponent implements OnInit {
       },
       {
         text: 'Livros',
-        path: 'gestao-produtos/produtos',
+        path: 'livro',
         icon: 'icon-tag',
         exact: true,
         active: true,
