@@ -1,0 +1,28 @@
+.not-found {
+  text-align: center;
+  h4,
+  h5 {
+    color: #fff;
+  }
+
+  ng-lottie {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .list-link {
+    h6 {
+      color: #fff;
+    }
+    .links {
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: row;
+      a {
+        padding: 0px 10px;
+      }
+    }
+  }
+}

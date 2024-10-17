@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8" />
+  <title>MM3</title>
+  <base href="/" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <!-- <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />  -->
+  <meta name="theme-color" content="#222b54" />
+  <meta name="description" content="MM3 - MAPD Management 3.0" />
+  <link rel="manifest" href="manifest.json" />  
+
+
+  <style>
+    html,
+    body {
+      margin: 0px;
+    }
+
+    #loading {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 1000;
+      background-color: #fff;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    #loding-wrapper {
+      bottom: 0;
+      left: 0;
+      overflow: hidden;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+
+    #loading-logo {
+      animation: 1.6s cubic-bezier(0, 0, .19, .82)1.2s forwards kf-c;
+      transform: scale(1);
+      transform-origin: 110px 203px;
+      /* animation: 3.6s cubic-bezier(.03, 0, .17, .67) forwards kf-e; */
+      margin: 0 auto;
+      position: relative;
+    }
+
+    #loading-progress {
+      animation: a-s .5s 1.5s 1 forwards;
+      background-color: #efecec;
+      height: 4px;
+      margin: 20px auto;
+      /* opacity: 0; */
+      overflow: hidden;
+      position: relative;
+      width: 300px;
+    }
+
+    #loading-progress::before {
+      animation: a-lb 20s 2s linear forwards;
+      background-color: #222c54;
+      content: '';
+      display: block;
+      height: 100%;
+      position: absolute;
+      transform: translateX(-300px);
+      width: 100%;
+    }
+
+    .msg {
+      color: #757575;
+      font-size: 20px;
+      letter-spacing: .2px;
+      line-height: 20px;
+      text-align: center;      
+    }
+
+    @keyframes kf-e {
+      0% {
+        opacity: 0;
+        transform: scale(0.72);
+      }
+
+      33% {
+        animation-timing-function: cubic-bezier(0.21, 0.02, 0.03, 0.92);
+        opacity: 1;
+        transform: scale(0.8);
+      }
+
+      50% {
+        animation-timing-function: linear;
+        transform: scale(0.96);
+      }
+    }
+
+    @keyframes kf-c {
+      25% {
+        animation-timing-function: cubic-bezier(0.17, 0.98, 0.38, 1);
+        transform: scale(1.1);
+      }
+
+      to {
+        transform: none;
+      }
+    }
+
+    @keyframes a-lb {
+      0% {
+        transform: translateX(-300px);
+      }
+
+      5% {
+        transform: translateX(-240px);
+      }
+
+      15% {
+        transform: translateX(-30px);
+      }
+
+      25% {
+        transform: translateX(-30px);
+      }
+
+      30% {
+        transform: translateX(-20px);
+      }
+
+      45% {
+        transform: translateX(-20px);
+      }
+
+      50% {
+        transform: translateX(-15px);
+      }
+
+      65% {
+        transform: translateX(-15px);
+      }
+
+      70% {
+        transform: translateX(-10px);
+      }
+
+      95% {
+        transform: translateX(-10px);
+      }
+
+      100% {
+        transform: translateX(-5px);
+      }
+    }
+
+    @keyframes a-s {
+      100% {
+        opacity: 1;
+      }
+    }
+  </style>
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#222c54">
+</head>
+
+<body class="background-metropolitano-azul-real">
+  <app-root>
+    <div id="loading">
+      <div id="loading-wrapper"></div>
+      <div id="loading-logo">
+        <img src="./assets/logo-mapd-basica.png" alt="">
+      </div>
+      <div id="loading-progress"></div>
+      <div class="msg">
+        Carregando...
+      </div>
+    </div>
+  </app-root>
+  <noscript>
+    Please enable JavaScript to continue using this application.
+    <h3 style="color:#222c54; margin: 2rem;">
+      Aplicativo indisponível sem javascript.
+    </h3>
+  </noscript> 
+
+</body>
+
+</html>

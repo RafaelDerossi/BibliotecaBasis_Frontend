@@ -1,0 +1,29 @@
+<div class="modal-body rounded">
+  <div class="d-flex align-items-center justify-content-center flex-column">
+    <div>
+      <img src="assets/mascote/triste.png" alt="">
+    </div>
+
+    <span class="message" [innerHTML]="message"></span>
+
+    <div class="mt-3 w-100">
+      <form [formGroup]="form" *ngIf="form">
+        <div class="form-group">
+          <textarea formControlName="response" rows="2" class="form-control" placeholder="Escreva aqui..."
+            [ngClass]="{'is-invalid':form?.get('response')?.errors && form?.get('response')?.touched}"></textarea>
+
+          <div class="invalid-feedback"
+            *ngIf="form?.get('response')?.hasError('required') && form?.get('response')?.touched">
+            Este campo é obrigatório
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-sm btn-gray-light font-weight-bold" (click)="save('close')">Cancelar</button>
+  <button type="button" class="btn btn-sm btn-danger" [disabled]="form.invalid"
+    (click)="save(response.value)">{{buttonText}}</button>
+</div>

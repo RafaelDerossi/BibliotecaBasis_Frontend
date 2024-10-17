@@ -1,0 +1,427 @@
+@import "fonts/variables.scss";
+
+$primary: #4682B4;
+$secondary: #708090;
+$secondary_light: #DCDCDC;
+$tertiary: #D3D3D3;
+$title: #FFFFFF;
+$text: #FFFFFF;
+$green: #28a745;
+$success: #04aa6d;
+$error: #ff4949;
+$add: #f9f116;
+$attention: #fec051;
+$orange: #f27b07;
+$form-label: #FFFFFF;
+$form-label2: #323c22;
+
+// backgrounds
+$fundo: #FFFFFF;
+$fundo1: #F0F8FF;
+$fundo2: #F5F5F5;
+$fundo3: $success;
+$fundo4: #F5FFFA;
+
+// box shadow
+$boxShadow: rgba(0, 0, 0, 0.5) 1px 1px 10px, rgba(0, 0, 0, 0.5) 1px 1px 10px;
+
+// tons de gray
+$gray: #656565;
+$grayDark: #323c47;
+$grayLight: #e8e4e4;
+$grayLight1: #f5f5f5;
+$grayLight2: #f8f5f1;
+$grayLight3: #bfcdd5;
+$grayLight4: #b6bec8;
+$grayLight5: #4b4b4b;
+$grayLight6: #d9e5f0;
+$grayLight7: #595d66;
+$grayLight8: #d1d1d1;
+
+$theme-colors: (
+  "primary": $primary,
+  "secundary": $secondary,
+  "secundary_light": $secondary_light,
+  "tertiary": $tertiary,
+  "title": $title,
+  "text": $text,
+  "success": $success,
+  "green": $green,
+  "error": $error,
+  "attention": $attention,
+  "orange": $orange,
+  "add": $add,
+  "form-label": $form-label,
+  "gray": $gray,
+  "gray-dark": $grayDark,
+  "gray-light": $grayLight,
+  "gray-light-1": $grayLight1,
+  "gray-light-2": $grayLight2,
+  "gray-light-3": $grayLight3,
+  "gray-light-4": $grayLight4,
+  "gray-light-5": $grayLight5,
+  "gray-light-6": $grayLight6,
+  "gray-light-7": $grayLight7,
+  "gray-light-8": $grayLight8,
+);
+
+$font-family-base: Inter, Roboto, Arial, "Arial Unicode MS", -apple-system, BlinkMacSystemFont, "Segoe UI",
+  "Helvetica Neue", "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+  "Noto Color Emoji";
+
+$font-sizes: 8, 10, 12, 14, 15, 16, 18, 20, 22, 24, 28, 32, 36, 48, 64, 72 !default;
+
+$sizes: (
+  10: 10%,
+  20: 20%,
+  30: 30%,
+  40: 40%,
+  60: 60%,
+  70: 70%,
+  80: 80%,
+  90: 90%,
+);
+
+$spacers: (
+  6: 1rem * 3.5,
+);
+
+$body-color: $grayLight5;
+$body-bg: $fundo;
+$input-bg: #fff;
+
+$dropdown-padding-y: 0;
+$dropdown-item-padding-y: 8px;
+$dropdown-link-color: $grayDark;
+$dropdown-link-hover-bg: $primary;
+$dropdown-link-hover-color: #fff;
+
+$modal-backdrop-bg: #000;
+$modal-backdrop-opacity: 0.75;
+$modal-content-border-radius: 0;
+
+$btn-padding-y: 0.75rem;
+
+$label-margin-bottom: 0.2rem;
+$input-height: 2.5rem;
+//$input-padding-y:1rem;
+
+$icomoon-font-path: "/assets/fonts";
+
+$nav-tabs-link-active-color: #ffffff;
+
+$nav-tabs-link-active-color: #ffffff;
+$nav-tabs-link-active-bg: $grayDark;
+$nav-tabs-link-active-border-color: $grayDark;
+
+$link-color: $primary;
+
+$custom-file-text: (
+  "en": "Procurar",
+  "es": "Procurar",
+);
+
+.custom-file-label::after {
+  content: "Procurar" !important;
+}
+.custom-dropzone {  
+  width: 100%;
+  h2 {
+    font-size: 30px;
+    font-weight: 600;
+    color: $grayDark;
+  }
+}
+
+// Gradient
+.bg-gradient {
+  background: linear-gradient(178.18deg, $primary 44.62%, #9ad1e5 158.3%);
+  color: #fff !important;
+}
+.bg-gradient-green {
+  background: linear-gradient(178.18deg, $green 44.62%, #9ad1e5 158.3%);
+  color: #fff !important;
+}
+
+.border-radius-215 {
+  border-radius: 215px;
+}
+
+.modal-extra {
+  max-width: 1900px;
+}
+
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+.cursor-no-drop {
+  cursor: no-drop !important;
+}
+
+.text-underline-hover {
+  &:hover {
+    text-decoration: 1px solid $primary;
+  }
+}
+
+.circle {
+  border-radius: 95px !important;
+}
+
+.font-raleway {
+  font-family: "Raleway", sans-serif !important;
+}
+
+@for $i from 1 through 9 {
+  .font-weight-#{$i}00 {
+    font-weight: $i * 100 !important;
+  }
+}
+
+@for $i from 1 through 9 {
+  .border-radius-#{$i}0 {
+    border-radius: $i * 10 !important;
+  }
+}
+
+.list-style-none {
+  list-style: none !important;
+}
+
+.overflow-x-auto {
+  overflow-x: auto !important;
+}
+.overflow-y-auto {
+  overflow-y: auto !important;
+}
+
+.bg-inherit {
+  background: inherit !important;
+}
+
+.linha-carrega-mais {
+  position: relative;
+  list-style: none;
+
+  li {
+    text-align: center;
+    background: $grayLight;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 1rem;
+
+    span {
+      background: inherit;
+      z-index: 2;
+      padding-right: 10px;
+      padding-left: 10px;
+      position: absolute;
+      top: 0;
+      cursor: pointer;
+      margin: 0 -15px;
+
+      &:hover {
+        border-bottom: $primary solid 1px;
+        color: $primary;
+      }
+    }
+
+    &:after {
+      content: "";
+      width: 100%;
+      position: absolute;
+      background: rgba(0, 0, 0, 0.1);
+      height: 1px;
+      right: 0;
+      top: 13px;
+      z-index: 1;
+    }
+  }
+}
+
+ngb-tabset {
+  .tabset,
+  .tab-content,
+  .tab-pane,
+  .tabbable {
+    height: 100% !important;
+  }
+}
+
+.white-space-nowrap {
+  white-space: nowrap !important;
+}
+
+.subModalOpen {
+  // Kill the scroll on the body
+  overflow: hidden !important;
+
+  .subModal {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+  }
+}
+
+.align-middle {
+  vertical-align: middle !important;
+}
+
+.form-floating {
+  position: relative;
+  padding-top: 12px;
+  width: 100%;
+  label {
+    pointer-events: none;
+    position: absolute;
+    top: calc(60% - 8px);
+    left: 8px;
+    transition: all 0.1s linear;
+    -webkit-transition: all 0.1s linear;
+    -moz-transition: all 0.1s linear;
+    padding: 0rem 0.2rem;
+    box-sizing: border-box;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  input {
+    color: $primary;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    outline: none;
+    // width: 600px;
+    width: 100%;
+    height: 2.8rem;
+    padding: 1.375rem 0.75rem 0.75rem 0.75rem;
+    font-size: 16px;
+    transition: all 0.1s linear;
+    -webkit-transition: all 0.1s linear;
+    -moz-transition: all 0.1s linear;
+    -webkit-appearance: none;
+
+    &:focus {
+      border: 1px solid $primary;
+      
+      + label {
+        font-size: 10px;
+        top: 12px;
+        color: #2e6fea;
+      }
+    }
+    &::placeholder {
+      color: transparent;
+    }
+
+    &:required {
+      &:invalid {
+        border: 1px solid $error;
+        + label {
+          color: $error;
+          &:before {
+            content: "* ";
+          }
+        }
+      }
+    }
+
+    &:not(:placeholder-shown) {
+      + label {
+        font-size: 10px;
+        top: 12px;
+        color: #2e6fea;
+      }
+    }
+  }
+}
+
+.mobile-opcoes {
+  display: none;
+}
+.menu {
+  .menu-item {
+    background-color: $primary;
+    border-radius: 0.25rem;
+    padding: 0.5rem 1rem;
+    color: #fff;
+    outline: none;
+    border: none;
+    margin-right: 10px;
+    &:last-child {
+      margin-right: 0px;
+    }
+    &.active {
+      background-color: $secondary;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .mobile-opcoes {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .menu {
+    background-color: #fff;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 0px;
+    transition: all 0.3s ease-in-out;
+    z-index: 2;
+    &.show {
+      height: 240px;
+    }
+    .menu-item {
+      display: block;
+      padding: 0.5rem 1rem;
+      outline: none;
+      border-radius: 0;
+      width: 100%;
+      border: none;
+      border-bottom: 1px solid #ccc;
+      background-color: #e4e4e4;
+      color: #343434;
+      text-align: left;
+      &.active {
+        color: #fff;
+      }
+    }
+  }
+}
+
+:host ::ng-deep .popover {
+  max-width: fit-content;
+  .arrow {
+    &::after {
+      border-bottom-color: $grayLight4;
+    }
+  }
+
+  .popover-header {
+    background-color: $primary;
+    padding: 0.5rem 0.75rem;
+    color: #fff;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 14px;
+
+    &::before {
+      border-bottom: none;
+    }
+  }
+
+  .popover-body {
+    padding: 0;
+
+    button {
+      &:hover {
+        background-color: $primary;
+        color: #fff !important;
+      }
+    }
+  }
+}

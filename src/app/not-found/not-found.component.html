@@ -1,0 +1,17 @@
+<div class="not-found">
+  <h4>Desculpe, esta página não está disponível</h4>
+  <h5>O link que você escolheu pode estar quebrado ou a página pode ter sido removida.</h5>
+
+  <ng-lottie width="460px" height="460px" [options]="options" (animationCreated)="animationCreated($event)"></ng-lottie>
+
+  <div class="list-link">
+    <h6>Tente realizar uma das ações abaixo</h6>
+    <div class="links">
+      <a class="btn btn-link btn-sm text-white" (click)="goBack()">Voltar</a>
+      <a class="btn btn-link btn-sm text-white" (click)="navigateToLogin()">Login</a>
+      <a class="btn btn-link btn-sm text-white" href="https://www.condominioapp.com" target="_blank">Site</a>
+      <a class="btn btn-link btn-sm text-white" href="/ajuda">Central de ajuda</a>
+    </div>
+  </div>
+
+</div>

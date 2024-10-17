@@ -1,0 +1,392 @@
+@import "themes/styles-var";
+@import "~bootstrap/scss/bootstrap";
+@import "themes/fonts/style.scss";
+@import "themes/utilities";
+@import "themes/dropdown";
+@import "themes/tables";
+@import "themes/tabs";
+@import "themes/validation";
+@import "themes/animation";
+@import "themes/backgrounds-mm3";
+
+@import "~swiper/css";
+@import "~swiper/css/effect-cube";
+@import "~swiper/css/navigation";
+@import "~swiper/css/pagination";
+
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  outline: none !important;
+}
+
+button {
+  outline: none !important;
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+// :root,
+html,
+body {
+  width: 100%;
+  font-family: "Inter", sans-serif;
+
+  &.auth-body {
+    background-color: #c9c9c9;
+    background-image: url("/assets/images/svg/mesaNote.jpg");
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    background-size: cover;
+    height: 100vh;
+    min-height: 450px;
+  }
+
+  button {
+    &:disabled {
+      cursor: no-drop;
+    }
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  // box-shadow: inset 0 0 6px rgba(112, 130, 164, 0.5);
+  // border-radius: 5px;
+  background: #efebeb;
+  border-left: 1px solid #efe6e6;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 0 6px rgba(112, 130, 164, 0.4);
+}
+
+.primary-button {
+  background-color: $primary;
+  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+  color: $white;
+  width: 100%;
+  outline: none;
+  border: none;
+  margin-right: 10px;
+  &:last-child {
+    margin-right: 0px;
+  }
+  &.active {
+    background-color: $secondary;
+  }
+}
+
+.ngb-highlight,
+mark,
+.mark {
+  background-color: #ffe251;
+  border-radius: 5px;
+}
+
+.shake {
+  animation: shake 0.5s forwards;
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(1px, 1px) rotate(0deg);
+  }
+  10% {
+    transform: translate(-1px, -2px) rotate(-1deg);
+  }
+  20% {
+    transform: translate(-3px, 0px) rotate(1deg);
+  }
+  30% {
+    transform: translate(3px, 2px) rotate(0deg);
+  }
+  40% {
+    transform: translate(1px, -1px) rotate(1deg);
+  }
+  50% {
+    transform: translate(-1px, 2px) rotate(-1deg);
+  }
+  60% {
+    transform: translate(-3px, 1px) rotate(0deg);
+  }
+  70% {
+    transform: translate(3px, 1px) rotate(-1deg);
+  }
+  80% {
+    transform: translate(-1px, -1px) rotate(1deg);
+  }
+  90% {
+    transform: translate(1px, 2px) rotate(0deg);
+  }
+  100% {
+    transform: translate(1px, -2px) rotate(-1deg);
+  }
+}
+
+.visible {
+  visibility: visible;
+}
+
+.visible-hidden {
+  visibility: hidden;
+}
+
+@media (max-width: 768px) {
+  .visible-md-hidden {
+    visibility: hidden;
+  }
+}
+
+.fundo-tabs-mobile {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.71);
+  z-index: 8;
+  display: none;
+  &.show {
+    display: flex;
+  }
+}
+
+.card-fixed-top {
+  position: fixed;
+  top: 20px;
+  width: 28.3% !important;
+  @media (max-width: 1536px) {
+    width: 35.3% !important;
+  }
+}
+
+/* Impressão */
+.fundo-impressao {
+  display: none;
+}
+
+.content-impressao {
+  display: none;
+}
+
+details {
+  display: flex;
+  flex-direction: column;
+  summary {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    padding: 5px 10px;
+    outline: none;
+    border-radius: 5px;
+    &:hover {
+      background-color: #fff;
+      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    }
+    &:after {
+      content: $icon-arrow-down;
+      font-family: "condominioapp";
+      font-size: 28px;
+      animation: open 0.3s ease-in-out;
+    }
+    &::-webkit-details-marker {
+      display: none;
+    }
+  }
+
+  .title {
+    font-size: 18px;
+    font-family: Poppins, sans-serif;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-grow: 1;
+    text-transform: capitalize;
+  }
+}
+
+details[open] {
+  > summary {
+    ~ * {
+      animation: open 0.3s ease-in-out;
+    }
+
+    &:after {
+      content: $icon-arrow-up;
+      font-family: "condominioapp";
+      font-size: 28px;
+      animation: open 0.3s ease-in-out;
+    }
+  }
+}
+
+carousel {
+  z-index: 1050 !important;
+}
+
+ngb-modal-backdrop,
+.modal {
+  z-index: 10001 !important;
+}
+
+.carousel-dots {
+  .carousel-dot {
+    border: 1px solid $grayLight5;
+  }
+  .carousel-dot-active {
+    background-color: $grayLight5;
+  }
+}
+
+.switch {
+  position: absolute;
+  margin-left: -9999px;
+  visibility: hidden;
+}
+
+.switch + label {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+}
+.switch--shadow + label {
+  padding: 2px;
+  width: 40px;
+  height: 20px;
+  background-color: #dddddd;
+  border-radius: 20px;
+}
+
+.switch--shadow + label:before,
+.switch--shadow + label:after {
+  display: block;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  bottom: 1px;
+  content: "";
+}
+.switch--shadow + label:before {
+  right: 1px;
+  background-color: #f1f1f1;
+  border-radius: 20px;
+  transition: all 0.4s;
+}
+.switch--shadow + label:after {
+  width: 22px;
+  background-color: #fff;
+  border-radius: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  transition: all 0.4s;
+}
+.switch--shadow:checked + label:before {
+  background-color: #8ce196;
+}
+.switch--shadow:checked + label:after {
+  transform: translateX(15px);
+}
+
+.modal-background-branco{
+  transition: all 0.6s ease-in-out;
+  animation: opacidade 0.6s;
+  background-color: #c0bebe;  
+}
+
+.modal-background-steel-blue{
+  transition: all 0.6s ease-in-out;
+  animation: opacidade 0.6s;
+  background-color: #4682B4;
+  
+}
+
+.modal-background-lightslate-gray{
+  transition: all 0.6s ease-in-out;
+  animation: opacidade 0.6s;  
+  background: #778899;
+}
+
+.modal-background-black{
+  transition: all 0.6s ease-in-out;
+  animation: opacidade 0.6s;
+  background: #343434;
+}
+
+.modal-background-green{
+  transition: all 0.6s ease-in-out;
+  animation: opacidade 0.6s;
+  background-color: #008000;   
+}
+
+.modal-background-light-green{
+  transition: all 0.6s ease-in-out;
+  animation: opacidade 0.6s;
+  background-color: #90EE90;  
+}
+
+.modal-background-red{
+  transition: all 0.6s ease-in-out;
+  animation: opacidade 0.6s;
+  background-color: #8B0000;
+}
+
+.modal-background-dark-red{
+  transition: all 0.6s ease-in-out;
+  animation: opacidade 0.6s;
+  background-color: #530101;
+}
+
+.modal-background-image-1{
+  transition: all 0.6s ease-in-out;
+  animation: opacidade 0.6s;  
+  background-color: #f0f8ff;  
+  background-image: url("/assets/images/temas/tema-background-1.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.modal-background-image-2{
+  transition: all 0.6s ease-in-out;
+  animation: opacidade 0.6s;
+  background-color: #c9c9a4;
+  background-image: url("/assets/images/temas/tema-background-2.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.modal-background-image-3{
+  transition: all 0.6s ease-in-out;
+  animation: opacidade 0.6s;
+  background-color: #dec8c9;
+  background-image: url("/assets/images/temas/tema-background-3.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.modal-background-image-4{
+  transition: all 0.6s ease-in-out;
+  animation: opacidade 0.6s;
+  background-color: #b6b7b7;
+  background-image: url("/assets/images/temas/tema-background-4.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}

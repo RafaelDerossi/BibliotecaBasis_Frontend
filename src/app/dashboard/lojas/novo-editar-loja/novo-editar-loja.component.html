@@ -1,0 +1,498 @@
+<div [class]="modalbackgroundStorageSelected">
+  
+  <div class="modal-header">
+    
+    <div class="text-uppercase modal-title text-title fs-18 ml-2">{{action}}</div>   
+
+    <button type="button" class="close text-danger" aria-label="Close" (click)="activeModal.close('close')">
+      <i class="icon-times-circle"></i>
+    </button>
+
+  </div>  
+  
+  
+
+  <form [formGroup]="form" class="form p-3">
+    <div class="container-fluid">
+    
+      <div class="alert border-danger text-danger font-weight-bold d-flex align-items-center my-2 fs-14"
+      *ngIf="errorMessage.length > 0">
+        <div class="mr-3">
+          <i class="icon-alert fs-24"></i>
+        </div>
+        <div>
+          <ng-container *ngFor="let error of errorMessage">
+            {{error}}
+          </ng-container>
+        </div>
+      </div>      
+
+      <div class="row">
+        <div class="col-12">
+          
+          <ul ngbNav #nav="ngbNav" [(activeId)]="activeTabId" [destroyOnHide]="false" (navChange)="onNavChange($event)" class="nav-tabs mt-1">
+            
+            <li [ngbNavItem]="1">
+              <a ngbNavLink><i class="icon-doc-empty"></i> Informações básicas</a>
+              <ng-template ngbNavContent let-active>
+  
+                <div class="row border rounded p-3 mb-3" *ngIf="action !== 'Detalhes da Loja'">
+      
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">          
+                      <label>Razão Social <i class="icon-companies"></i></label>
+                      <div class="input">             
+                        <input type="text" class="form-control" autofocus id="razaoSocial" placeholder="ABDC LTDA" formControlName="razaoSocial">            
+                      </div>    
+                      <span class="text-danger" *ngIf="displayMessage.razaoSocial">
+                        <p [innerHTML]="displayMessage.razaoSocial"></p>
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">          
+                      <label>Nome Fantasia <i class="icon-companies"></i></label>
+                      <div class="input">             
+                        <input type="text" class="form-control" autofocus id="nomeFantasia" placeholder="ABDC" formControlName="nomeFantasia">            
+                      </div>    
+                      <span class="text-danger" *ngIf="displayMessage.nomeFantasia">
+                        <p [innerHTML]="displayMessage.nomeFantasia"></p>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">          
+                      <label>CNPJ <i class="icon-doc-empty"></i></label>
+                      <div class="input">             
+                        <input type="text" class="form-control" autofocus id="cnpj" mask="00.000.000/0000-00" placeholder="EX: 00.000.000/0000-00" formControlName="cnpj">            
+                      </div>    
+                      <span class="text-danger" *ngIf="displayMessage.cnpj">
+                        <p [innerHTML]="displayMessage.cnpj"></p>
+                      </span>
+                    </div>
+                  </div>
+          
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">          
+                      <label>Inscrição Estadual <i class="icon-doc-empty"></i></label>
+                      <div class="input">             
+                        <input type="text" class="form-control" autofocus id="inscricaoEstadual" placeholder=" " formControlName="inscricaoEstadual">
+                      </div>    
+                      <span class="text-danger" *ngIf="displayMessage.inscricaoEstadual">
+                        <p [innerHTML]="displayMessage.inscricaoEstadual"></p>
+                      </span>
+                    </div>
+                  </div>
+                  
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label>Regime Tributário <i class="icon-open-book"></i></label>
+                      <div class="input">             
+                        <select name="regimeTributario" id="regimeTributario" name="regimeTributario"  class="form-control" placeholder="Selecione" formControlName="regimeTributario">
+                          <option value=1>Simples Nacional</option>
+                          <option value=2>Tributação Normal</option>
+                          <option value=3>MEI</option>
+                        </select>              
+                      </div>                        
+                      <span class="text-danger" *ngIf="displayMessage.regimeTributario">
+                        <p [innerHTML]="displayMessage.regimeTributario"></p>
+                      </span>
+                    </div>
+                  </div>
+          
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">          
+                      <label>Código <i class="icon-doc-empty"></i></label>
+                      <div class="input">             
+                        <input type="number" min="1" class="form-control" autofocus id="codigo" placeholder="EX: 1" formControlName="codigo">
+                      </div>    
+                      <span class="text-danger" *ngIf="displayMessage.codigo">
+                        <p [innerHTML]="displayMessage.codigo"></p>
+                      </span>
+                    </div>
+                  </div>
+
+                </div>              
+
+
+                <div class="row border rounded p-3 mb-3" *ngIf="action == 'Detalhes da Loja'">
+      
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">          
+                      <label>Razão Social <i class="icon-companies"></i></label>
+                      <div class="text-title">             
+                        <h4>{{loja.razaoSocial}}</h4>
+                      </div>                     
+                    </div>
+                  </div>
+                  
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">          
+                      <label>Nome Fantasia <i class="icon-companies"></i></label>
+                      <div class="text-title">             
+                        <h4>{{loja.nomeFantasia}}</h4>
+                      </div>        
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">          
+                      <label>CNPJ <i class="icon-doc-empty"></i></label>
+                      <div class="text-title">             
+                        <h4>{{loja.cnpj | mask: '00.000.000/0000-00'}}</h4>
+                      </div>                      
+                    </div>
+                  </div>
+          
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">          
+                      <label>Inscrição Estadual <i class="icon-doc-empty"></i></label>
+                      <div class="text-title">             
+                        <h4>{{loja.inscricaoEstadual}}</h4>
+                      </div>
+                    </div>
+                  </div>
+                  
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label>Regime Tributário <i class="icon-open-book"></i></label>
+                      <div class="text-title">             
+                        <h4>{{loja.regimeTributarioDescricao}}</h4>
+                      </div>
+                    </div>
+                  </div>
+          
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">          
+                      <label>Código <i class="icon-doc-empty"></i></label>
+                      <div class="text-title">             
+                        <h4>{{loja.codigo}}</h4>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>   
+
+
+              </ng-template>
+            </li>
+  
+            <li [ngbNavItem]="2" [disabled]="disable2">
+              <a ngbNavLink><i class="icon-phone"></i> Contatos</a>
+              <ng-template ngbNavContent let-active>
+                
+                <div class="row border rounded p-3 mb-3" *ngIf="action != 'Detalhes da Loja'">
+      
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label>E-mail <i class="icon-envelope-1"></i></label>
+                      <div class="input">
+                        <input type="email" class="form-control" autofocus id="email" name="email" placeholder="Ex: exemple@email.com.br"
+                          formControlName="email">                          
+                      </div>    
+                      <span class="text-danger" *ngIf="displayMessage.email">
+                        <p [innerHTML]="displayMessage.email"></p>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label>Telefone <i class="icon-phone"></i></label>
+                      <input type="text" placeholder="Ex: (99)9999-9999" class="form-control" id="telefone" name="telefone"
+                        formControlName="telefone" mask="(00)0000-0000" />
+                        <span class="text-danger" *ngIf="displayMessage.telefone">
+                          <p [innerHTML]="displayMessage.telefone"></p>
+                        </span>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label>Celular <i class="icon-smartphone"></i></label>
+                      <input type="text" placeholder="Ex: (99)99999-9999" class="form-control" id="celular" name="celular"
+                        formControlName="celular" mask="(00)00000-0000" />
+                        <span class="text-danger" *ngIf="displayMessage.celular">
+                          <p [innerHTML]="displayMessage.celular"></p>
+                        </span>
+                    </div>
+                  </div>
+          
+                </div>    
+
+
+                <div class="row border rounded p-3 mb-3" *ngIf="action == 'Detalhes da Loja'">
+      
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label>E-mail <i class="icon-envelope-1"></i></label>
+                      <div class="text-title">             
+                        <h4>{{loja.email}}</h4>
+                      </div>            
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label>Telefone <i class="icon-phone"></i></label>
+                      <div class="text-title">             
+                        <h4>{{loja.telefone | mask: '(00)0000-0000'}}</h4>
+                      </div>                      
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label>Celular <i class="icon-smartphone"></i></label>
+                      <div class="text-title">             
+                        <h4>{{loja.celular | mask: '(00)00000-0000'}}</h4>
+                      </div>                     
+                    </div>
+                  </div>
+          
+                </div>   
+              </ng-template>
+            </li>  
+            
+            <li [ngbNavItem]="3" [disabled]="disable3">
+              <a ngbNavLink><i class="icon-envelope"></i> Endereço</a>
+              <ng-template ngbNavContent let-active>
+                
+                <div class="row border rounded p-3 mb-3" *ngIf="action !== 'Detalhes da Loja'">              
+          
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label>Cep <i class="icon-envelope"></i></label>
+                      <input type="text" placeholder="Ex: 00.000-000" class="form-control" autofocus id="cep" 
+                          formControlName="cep" mask="00.000-000" (blur)="buscarCep($event.target.value)" />
+                        <span class="text-danger" *ngIf="displayMessage.cep">
+                          <p [innerHTML]="displayMessage.cep"></p>
+                        </span>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label>Estado <i class="icon-envelope"></i></label>
+                      <select name="estado" autofocus id="estado" class="form-control" formControlName="estado">                                 
+                            <option value="RJ">Rio de Janeiro</option>
+                            <option value="SP">São Paulo</option>
+                            <option value="MG">Minas Gerais</option>
+                          </select>              
+                        <span class="text-danger" *ngIf="displayMessage.estado">
+                          <p [innerHTML]="displayMessage.estado"></p>
+                        </span>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label>Cidade <i class="icon-envelope"></i></label>
+                      <div class="input">            
+                        <input type="text" class="form-control" autofocus id="cidade" placeholder="Ex: Rio de Janeiro"
+                          formControlName="cidade">
+                          <span class="text-danger" *ngIf="displayMessage.cidade">
+                            <p [innerHTML]="displayMessage.cidade"></p>
+                          </span>
+                      </div>    
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label>Bairro <i class="icon-envelope"></i></label>
+                      <div class="input">            
+                        <input type="text" class="form-control" autofocus id="bairro" placeholder="Ex: Centro"
+                          formControlName="bairro">
+                          <span class="text-danger" *ngIf="displayMessage.bairro">
+                            <p [innerHTML]="displayMessage.bairro"></p>
+                          </span>
+                      </div>    
+                    </div>
+                  </div> 
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label>Logradouro <i class="icon-envelope"></i></label>
+                      <div class="input">            
+                        <input type="text" class="form-control" autofocus id="logradouro" placeholder="Ex: Av. Rio Branco"
+                          formControlName="logradouro">
+                          <span class="text-danger" *ngIf="displayMessage.logradouro">
+                            <p [innerHTML]="displayMessage.logradouro"></p>
+                          </span>
+                      </div>    
+                    </div>
+                  </div>        
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label>Número <i class="icon-envelope"></i></label>
+                      <div class="input">            
+                        <input type="text" class="form-control" autofocus id="numero" name ="numero" placeholder="Ex: 1001"
+                          formControlName="numero">
+                          <span class="text-danger" *ngIf="displayMessage.numero">
+                            <p [innerHTML]="displayMessage.numero"></p>
+                          </span>
+                      </div>    
+                    </div>
+                  </div>        
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label>Complemento <i class="icon-envelope"></i></label>
+                      <div class="input">            
+                        <input type="text" class="form-control" autofocus id="complemento" placeholder="Ex: loja 101"
+                          formControlName="complemento">
+                          <span class="text-danger" *ngIf="displayMessage.complemento">
+                            <p [innerHTML]="displayMessage.complemento"></p>
+                          </span>
+                      </div>    
+                    </div>
+                  </div>
+          
+                </div>    
+
+
+
+                <div class="row border rounded p-3 mb-3" *ngIf="action == 'Detalhes da Loja'">              
+          
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label>Cep <i class="icon-envelope"></i></label>
+                      <div class="text-title">             
+                        <h4>{{loja.cep | mask: '00.000-000'}}</h4>
+                      </div>                      
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label>Estado <i class="icon-envelope"></i></label>
+                      <div class="text-title">             
+                        <h4>{{loja.estado}}</h4>
+                      </div>  
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label>Cidade <i class="icon-envelope"></i></label>
+                      <div class="text-title">             
+                        <h4>{{loja.cidade}}</h4>
+                      </div>  
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label>Bairro <i class="icon-envelope"></i></label>
+                      <div class="text-title">             
+                        <h4>{{loja.bairro}}</h4>
+                      </div>  
+                    </div>
+                  </div> 
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label>Logradouro <i class="icon-envelope"></i></label>
+                      <div class="text-title">             
+                        <h4>{{loja.logradouro}}</h4>
+                      </div>  
+                    </div>
+                  </div>        
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label>Número <i class="icon-envelope"></i></label>
+                      <div class="text-title">             
+                        <h4>{{loja.numero}}</h4>
+                      </div>  
+                    </div>
+                  </div>        
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">
+                      <label>Complemento <i class="icon-envelope"></i></label>
+                      <div class="text-title">             
+                        <h4>{{loja.complemento}}</h4>
+                      </div>  
+                    </div>
+                  </div>
+          
+                </div>  
+
+              </ng-template>
+            </li>  
+
+            <li class="d-flex align-items-center justify-content-end w-50" *ngIf="action == 'Detalhes da Loja' && somenteConsulta == false">              
+              <div class="d-flex align-items-center justify-content-end">  
+      
+                <div>
+                  <button type="button" class="btn btn-sm btn-add ml-2" (click)="novaLoja()">
+                    <span><i class="icon-plus"></i></span>
+                   </button>
+                </div>
+                <div>
+                  <button type="button" class="btn btn-sm btn-primary ml-2" (click)="editarLoja()">
+                    <span><i class="icon-pencil"></i></span>
+                  </button>          
+                </div>  
+                <div>
+                  <button type="button" class="btn btn-sm btn-danger ml-2" (click)="excluirLoja()">
+                    <span><i class="icon-trash"></i></span>
+                  </button>            
+                </div>
+          
+              </div>
+            </li>
+          </ul>
+  
+          <div [ngbNavOutlet]="nav" class="mt-2"></div>          
+
+        </div>
+      </div>
+
+    </div>
+    
+
+    <div class="modal-footer">
+
+      <div class="d-flex align-items-center justify-content-between w-100">
+
+        <div class="d-flex align-items-center justify-content-end w-100">
+  
+          <div>
+            <button type="button" class="btn btn-sm btn-danger ml-2" (click)="activeModal.close('close')" *ngIf="action !== 'Detalhes da Loja'">
+              Cancelar
+             </button>
+          </div>
+          <div>
+            <button class="btn btn-sm btn-primary ml-2" (click)="voltarStep()" *ngIf="activeTabId != 1">
+              Voltar
+            </button>            
+          </div>
+          <div>            
+            <button class="btn btn-sm btn-primary ml-2" (click)="proximoStep()" *ngIf="activeTabId != 3">
+              Próximo
+            </button>
+          </div>
+  
+          <div>
+            <button type="button" class="btn btn-sm btn-success ml-2" (click)="save()" 
+              *ngIf="(activeTabId == 3 && action !== 'Detalhes da Loja') || action == 'Editar Loja'">
+              Salvar
+            </button>
+          </div>
+        </div>
+
+      </div>
+  
+    </div>
+
+  </form>
+
+</div>

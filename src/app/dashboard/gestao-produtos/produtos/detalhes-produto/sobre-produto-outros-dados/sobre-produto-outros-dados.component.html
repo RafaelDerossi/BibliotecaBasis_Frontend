@@ -1,0 +1,64 @@
+<div class="perfil-unidade">
+  <div class="perfil-actions">
+    
+    <div>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-md-6">
+      <div class="perfil-detalhes">
+        <ul class="list-style-none pl-0">                         
+          <li>
+            ANP:
+            <ul class="list-style-none pl-0">               
+              <li>
+                 - Código - Descrição:
+                <h5><strong>{{produto?.codigoANP}} - {{produto?.descricaoANP}}</strong></h5>
+              </li>
+              <li>
+                 - PGLP - PGNN - PGNI 
+               <h5><strong>{{produto?.pglp}}-{{produto?.pgnn}}-{{produto?.pgni}}</strong></h5>
+             </li>
+              <li>
+                 - Valor Partida:
+                <h5><strong>{{produto?.valorPartida}}</strong></h5>
+              </li>
+            </ul>            
+          </li>        
+        </ul>        
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="perfil-detalhes">
+        <ul class="list-style-none pl-0">     
+          <li>
+            Imprimir Etiqueta:
+            <div *ngIf="produto?.imprimirEtiqueta == true">
+              <h5><strong>SIM</strong></h5>  
+            </div>
+            <div *ngIf="produto?.imprimirEtiqueta == false">
+              <h5><strong>NÃO</strong></h5>  
+            </div>            
+          </li>          
+          <li>
+            Curva - Data:
+            <h5><strong>{{produto?.curva}} - {{produto?.dataDaAlteracaoDaCurva}}</strong></h5>    
+          </li>          
+          <li>
+            Meses de Garantia:
+            <h5><strong>{{produto?.qtdMesesGarantia}}</strong></h5>      
+          </li>          
+          <li>
+            Último Fornecedor:
+            <h5><strong>{{produto?.ultimoFornecedorId}}-{{produto?.nomeFantasiaUltimoFornecedor}}</strong></h5>  
+          </li>          
+        </ul>        
+      </div>
+    </div>
+
+  </div>  
+  
+</div>

@@ -1,0 +1,14 @@
+<div class="modal-body rounded">
+  <div class="d-flex align-items-center justify-content-center flex-column">
+    <div>
+      <img src="assets/mascote/triste.png" alt="">
+    </div>
+
+    <span class="message" [innerHTML]="message"></span>
+  </div>
+
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-sm btn-gray-light font-weight-bold" (click)="save('close')">Cancelar</button>
+  <button type="button" class="btn btn-sm btn-danger" (click)="save('confirm')">{{buttonText}}</button>
+</div>

@@ -1,0 +1,11 @@
+<div class="modal-header">
+  <div class="text-uppercase modal-title text-title fs-18">{{title}}</div>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+    <i class="icon-times-circle"></i>
+  </button>
+</div>
+<div class="modal-body" [innerHTML]="message"></div>
+<div class="modal-footer">
+  <button *ngFor="let item of options" type="button" class="btn" (click)="activeModal.close(item.value)"
+    [ngClass]="item.cssClass">{{item.text}}</button>
+</div>

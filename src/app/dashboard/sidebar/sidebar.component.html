@@ -1,0 +1,34 @@
+<div class="menus" [ngClass]="{'is-menu-open': isMenuOpen}">
+  
+  <button class="toggle-menu" [ngClass]="{'is-open': isMenuOpen}" (click)="toggleMenu()"
+    [ngbTooltip]="isMenuOpen ? 'Fechar menu' : 'Abrir Menu'">
+    <span class="text">
+      Menu
+    </span>
+    <!-- <span class="icone"></span> -->
+    <i [ngClass]="isMenuOpen ? 'fs-14 icon-times' : 'fs-20 icon-arrow-up'"></i>
+  </button>
+
+  <div class="menu-header">
+    <button class="btn-fixar-menu" (click)="fixarMenu()" ngbTooltip="Fixar menu" *ngIf="!menuFixo">
+      <i class="icon-checkbox-unchecked"></i>
+    </button>
+    <button class="btn-fixar-menu" (click)="desfixarMenu()" ngbTooltip="Desfixar menu" *ngIf="menuFixo">
+      <i class="icon-check"></i>
+    </button>   
+  </div>
+  
+  
+  <div class="menus-content">    
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item" *ngFor="let route of menuCopy">
+        <a class="nav-link" [class]="router?.url.includes(route.path)  ? 'active' : ''" (click)="verificarMenuFixo(); navigate(route.path)" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact: route?.exact}">
+          <i [class]="route?.icon"></i>
+          <span class="ml-1">{{route?.text}}</span>
+        </a>
+      </li>
+    </ul>
+  </div> 
+  
+</div>

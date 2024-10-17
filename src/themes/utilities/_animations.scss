@@ -1,0 +1,26 @@
+@keyframes loading {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+@keyframes bg_loading {
+  from {
+    background-position: 0% 0%;
+  }
+
+  to {
+    background-position: 100% 0%;
+  }
+}
+
+.anim {
+  &-loading {
+    animation: loading 900ms infinite;
+    animation-timing-function: linear;
+  }
+}

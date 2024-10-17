@@ -1,0 +1,1191 @@
+<div [class]="modalbackgroundStorageSelected">
+  
+  <div class="modal-header">
+    
+    <div class="text-uppercase modal-title text-title fs-18 ml-2">Novo Produto</div>   
+
+    <button type="button" class="close text-danger" aria-label="Close" (click)="activeModal.close('close')">
+      <i class="icon-times-circle"></i>
+    </button>
+
+  </div>
+  
+  
+
+  <form [formGroup]="form" class="form p-3">
+    <div class="container-fluid">
+    
+      <div class="alert border-danger text-danger font-weight-bold d-flex align-items-center my-2 fs-14"
+      *ngIf="errorMessage.length > 0">
+        <div class="mr-3">
+          <i class="icon-alert fs-24"></i>
+        </div>
+        <div>
+          <ng-container *ngFor="let error of errorMessage">
+            {{error}}
+          </ng-container>
+        </div>
+      </div>      
+
+      <div class="row">
+        <div class="col-12">
+          
+          <ul ngbNav #nav="ngbNav" [(activeId)]="activeTabId" [destroyOnHide]="false" (navChange)="onNavChange($event)" class="nav-tabs mt-1">
+            
+            <!-- Identificação -->
+            <li [ngbNavItem]="1">
+              <a ngbNavLink><i class="icon-bar-code"></i> Identificação</a>
+              <ng-template ngbNavContent let-active>
+  
+                <div class="">
+  
+                  <div class="row border rounded p-3 mb-2">
+                    
+                    <div class="col-12 col-lg-6">
+                      <div class="form-group">          
+                        <label>GTIN <i class="icon-bar-code"></i></label>
+                        <div class="input">             
+                         <input type="text" class="form-control" 
+                          id="gtin" formControlName="gtin" digitOnly minlength="8" maxlength="14"
+                          pattern="[0-9]*" autofocus>                         
+                        </div>                         
+                        <span class="text-danger" *ngIf="displayMessage.gtin">
+                          <p [innerHTML]="displayMessage.gtin"></p>
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6">
+                      <div class="form-group">          
+                        <label>Código Genuíno <i class="icon-doc-search"></i></label>
+                        <div class="input">             
+                         <input type="text" class="form-control" 
+                          id="genuino" formControlName="genuino" maxlength="15">                         
+                        </div> 
+                        <small class="text-muted">
+                          {{form?.get('genuino').value.length}} de 15 caracteres
+                        </small>                          
+                        <span class="text-danger" *ngIf="displayMessage.genuino">
+                          <p [innerHTML]="displayMessage.genuino"></p>
+                        </span>
+                      </div>
+                    </div>
+        
+                  </div>
+
+                </div>
+
+              </ng-template>
+            </li>
+            
+            <!-- Fabrica -->
+            <li [ngbNavItem]="2" [disabled]="disable2">
+              <a ngbNavLink><i class="icon-companies"></i> Fábrica</a>
+              <ng-template ngbNavContent let-active>
+
+                <div class="">
+                  
+                  <div class="row border rounded p-3 mb-2">
+                      
+                    <div class="col-12 col-lg-6">
+                      <div class="form-group">
+                        <label>Fábrica <i class="icon-companies"></i></label>
+                        <div class="input">             
+                          <ng-select autofocus [multiple]="false" name="fabricaId" id="fabricaId" formControlName="fabricaId"
+                           class="ng-select form-control" (blur)="validarForm()">
+                           <ng-option *ngFor="let fabrica of fabricas" [value]="fabrica?.id">
+                              {{fabrica?.nome}}
+                            </ng-option>
+                          </ng-select>  
+                        </div>                        
+                        <span class="text-danger" *ngIf="displayMessage.fabricaId">
+                          <p [innerHTML]="displayMessage.fabricaId"></p>
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6">
+                      <div class="form-group">          
+                        <label>Código Interno do Fabricante (CIF) <i class="icon-doc-search"></i></label>
+                        <div class="input">             
+                         <input type="text" class="form-control" 
+                          id="cif" formControlName="cif" maxlength="20">                         
+                        </div>  
+                        <small class="text-muted">
+                          {{form?.get('cif').value.length}} de 20 caracteres
+                        </small>                       
+                        <span class="text-danger" *ngIf="displayMessage.cif">
+                          <p [innerHTML]="displayMessage.cif"></p>
+                        </span>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+              </ng-template>
+            </li>
+
+            <!-- Classificação -->
+            <li [ngbNavItem]="3" [disabled]="disable3">
+              <a ngbNavLink><i class="icon-open-book"></i> Classificação</a>
+              <ng-template ngbNavContent let-active>
+                
+                <div class="">
+  
+                  <div class="row border rounded p-3 mb-2">                
+
+                    <div class="col-12 col-lg-6">
+                      <div class="form-group">
+                        <label>Grupo <i class="icon-open-book"></i></label>
+                        <div class="input">
+                          <ng-select [multiple]="false" name="grupoId" id="grupoId"
+                           formControlName="grupoId"
+                           class="ng-select form-control" (blur)="validarForm()"
+                            (change)="listarSubgrupos()">
+                           <ng-option *ngFor="let grupo of grupos" [value]="grupo?.id">
+                              {{grupo?.nome}}
+                            </ng-option>
+                          </ng-select>                          
+                        </div>                        
+                        <span class="text-danger" *ngIf="displayMessage.grupoId">
+                          <p [innerHTML]="displayMessage.grupoId"></p>
+                        </span>
+                      </div>
+                    </div>
+        
+                    <div class="col-12 col-lg-6">
+                      <div class="form-group">
+                        <label>Subgrupo <i class="icon-open-book"></i></label>
+                        <div class="input">             
+                          <ng-select [multiple]="false" name="subgrupoId" id="subgrupoId"
+                          formControlName="subgrupoId"
+                            class="ng-select form-control" (blur)="validarForm()">
+                            <ng-option *ngFor="let subgrupo of subgrupos" [value]="subgrupo?.id">
+                             {{subgrupo?.nome}}
+                            </ng-option>
+                          </ng-select>  
+                        </div>                        
+                        <span class="text-danger" *ngIf="displayMessage.subgrupoId">
+                          <p [innerHTML]="displayMessage.subgrupoId"></p>
+                        </span>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </ng-template>
+            </li>
+
+            <!-- Descrição -->
+            <li [ngbNavItem]="4" [disabled]="disable4">
+              <a ngbNavLink><i class="icon-doc-search"></i> Descrição</a>
+              <ng-template ngbNavContent let-active>
+                
+                <div class="row border rounded p-3 mb-2">
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">          
+                      <label>Descrição de PDV <i class="icon-doc-search"></i></label>
+                      <div class="input">             
+                        <input type="text" class="form-control" id="descricaoDePDV" name="descricaoDePDV"
+                         formControlName="descricaoDePDV" minlength="2" maxlength="29">
+                         <small class="text-muted">
+                          {{form?.get('descricaoDePDV').value.length}} de 29 caracteres
+                        </small>
+                      </div>                      
+                      <span class="text-danger" *ngIf="displayMessage.descricaoDePDV">
+                        <p [innerHTML]="displayMessage.descricaoDePDV"></p>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">          
+                      <label>Descrição Completa <i class="icon-doc-search"></i></label>
+                      <div class="input">             
+                        <input type="text" class="form-control" 
+                         id="descricaoCompleta" name="descricaoCompleta" formControlName="descricaoCompleta" 
+                         minlength="2" maxlength="400">
+                      </div>    
+                      <small class="text-muted">
+                        {{form?.get('descricaoCompleta').value.length}} de 400 caracteres
+                      </small>
+                      <span class="text-danger" *ngIf="displayMessage.descricaoCompleta">
+                        <p [innerHTML]="displayMessage.descricaoCompleta"></p>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row border rounded p-3 mb-2">      
+                  <div class="col-12 col-lg-12">
+                    
+                    <div class="text-uppercase text-title">
+                      Aplicações
+                    </div>            
+      
+                    <div class="aplicacoes" formArrayName="aplicacoes">
+                      <hr />
+                      <div cdkDropList class="board-column-tasks" (cdkDropListDropped)="dropAplicacao($event)">
+                        <div class="aplicacao" [id]="i" *ngFor="let aplicacao of form.get('aplicacoes')?.controls; let i = index"
+                          cdkDrag #elem="cdkDrag">
+                
+                          <div class="counter">{{ i + 1}}</div>         
+                          
+                          <ng-container [formGroupName]="i">
+                
+                            <div class="d-flex w-100">
+                              <button class="btn btn-sm mr-1 outline-0" cdkDragHandle style="cursor: move !important">
+                                <i class="icon-menu"></i>
+                              </button>
+                              
+                              <div class="row w-100">
+                                <div class="col-12 col-lg-8">
+                                  <div class="form-group w-100 mb-0">
+                                    <label>Aplicação {{ i + 1}}</label>
+                                    <input type="text" minlength="1" maxlength="400" class="form-control"
+                                      formControlName="descricao" id="descricao">
+                                    <small class="text-muted"
+                                      [ngClass]="{'is-invalid':aplicacao.get('descricao').errors && aplicacao.get('descricao').touched}">
+                                      {{aplicacao.get('descricao').value.length}} de 400 caracteres
+                                    </small>
+                                    <div class="invalid-feedback"
+                                      *ngIf="aplicacao.get('descricao').hasError('required') && aplicacao.get('descricao').touched">
+                                      Descrição da aplicação é obrigatório
+                                    </div>
+                                  </div> 
+                                </div>
+
+                                <div class="col-12 col-lg-3">
+                                  <div class="form-group w-100 mb-0">
+                                    <label>Montadora <i class="icon-companies"></i></label>
+                                    <div class="input">             
+                                      <ng-select autofocus [multiple]="false" name="montadoraId" id="montadoraId" formControlName="montadoraId"
+                                        class="ng-select form-control" (blur)="validarForm()">
+                                        <ng-option *ngFor="let montadora of montadoras" [value]="montadora?.id">
+                                          {{montadora?.nome}}
+                                        </ng-option>
+                                      </ng-select>  
+                                    </div>   
+                                    <div class="invalid-feedback"
+                                      *ngIf="aplicacao.get('montadoraId').hasError('required') && aplicacao.get('montadoraId').touched">
+                                      Montadora não informada
+                                    </div>
+                                  </div>    
+                                </div>
+
+                                <div class="col-12 col-lg-1">
+                                  
+                                  <div class="mt-1">
+                                    <button type="button" class="btn btn-sm text-danger"
+                                      ngbTooltip="Remover aplicação" (click)="removerAplicacaoDaLista(i)">
+                                      <i class="icon-times-circle mr-1"></i>
+                                    </button>
+                                  </div>                           
+      
+                                </div>
+                              </div>   
+                              
+                            </div>
+                
+                          </ng-container>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-end">
+                      <button type="button" class="btn btn-sm btn-add"                 
+                        [ngbTooltip]="'Adicionar aplicação'"
+                        (click)="adicionarAplicacaoNaLista()">                  
+                        <i class="icon-plus-circle mr-1 mb-1"></i>Adicionar
+                      </button>
+                    </div>
+      
+                  </div>
+                </div> 
+                
+
+              </ng-template>
+            </li>
+
+            <!-- Preço -->
+            <li [ngbNavItem]="5" [disabled]="disable5">
+              <a ngbNavLink><i class="icon-tag-price"></i> Preço</a>
+              <ng-template ngbNavContent let-active>
+                
+                <div class="border rounded p-3 mb-2">
+
+                  <div class="row">      
+                    
+                    <div class="col-12 col-lg-3">
+                      <div class="form-group">
+                        <label>Unidade <i class="icon-box"></i></label>
+                        <div class="input">             
+                        
+                          <select name="unidadeId" id="unidadeId" class="form-control" 
+                            formControlName="unidadeId" value="">
+                                                    
+                            <option *ngFor="let unidade of unidades" [value]="unidade?.id">                            
+                              {{unidade?.abreviacao}}
+                            </option>
+  
+                          </select>              
+  
+                        </div>                        
+                        <span class="text-danger" *ngIf="displayMessage.unidadeId">
+                          <p [innerHTML]="displayMessage.unidadeId"></p>
+                        </span>
+                      </div>
+                    </div>            
+
+                    <div class="col-12 col-lg-3">
+                      <div class="form-group">          
+                        <label>Fator Multiplicador <i class="icon-tag-price"></i></label>
+                        <div class="input">             
+                         <input type="number" class="form-control" 
+                          id="fatorMultiplicador" formControlName="fatorMultiplicador"
+                          min="0" pattern="[0-9]*">
+                        </div>                         
+                        <span class="text-danger" *ngIf="displayMessage.fatorMultiplicador">
+                          <p [innerHTML]="displayMessage.fatorMultiplicador"></p>
+                        </span>
+                      </div>
+                    </div>                
+                    
+                    <div class="col-12 col-lg-3">
+                      <div class="form-group">          
+                        <label>Preço de Custo <i class="icon-tag-price"></i></label>
+                        <div class="input">             
+                         <input type="text" class="form-control" 
+                          id="precoDeCusto" formControlName="precoDeCusto" 
+                          currencyMask placeholder="R$ 0,00">                         
+                        </div>                         
+                        <span class="text-danger" *ngIf="displayMessage.precoDeCusto">
+                          <p [innerHTML]="displayMessage.precoDeCusto"></p>
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="col-12 col-lg-3">
+                      <div class="form-group">          
+                        <label>Mark-up <i class="icon-tag-price"></i></label>
+                        <div class="input">             
+                         <input type="number" class="form-control" 
+                          id="markup" formControlName="markup" 
+                          placeholder="40" min="0" />
+                        </div>                         
+                        <span class="text-danger" *ngIf="displayMessage.markup">
+                          <p [innerHTML]="displayMessage.markup"></p>
+                        </span>
+                      </div>
+                    </div>
+
+                  </div>    
+
+                  <div class="row">                             
+
+                    <div class="col-12 col-lg-4">
+                      <div class="form-group">          
+                        <label>Preço <i class="icon-tag-price"></i></label>
+                        <div class="input">             
+                         <input type="text" class="form-control" 
+                          id="preco" formControlName="preco" 
+                          currencyMask placeholder="R$ 0,00"
+                          (blur)="calcularPorcentagemDeDesconto()">                         
+                        </div>                         
+                        <span class="text-danger" *ngIf="displayMessage.preco">
+                          <p [innerHTML]="displayMessage.preco"></p>
+                        </span>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="row">
+                    
+                    <div class="col-12 col-lg-3">
+                      <div class="form-group">          
+                        <label>Preço c/ Desconto <i class="icon-tag-price"></i></label>
+                        <div class="input">             
+                         <input type="text" class="form-control" 
+                          id="precoComDesconto" formControlName="precoComDesconto" 
+                          currencyMask placeholder="R$ 0,00"
+                          (blur)="calcularPorcentagemDeDesconto()">
+                        </div>                         
+                        <span class="text-danger" *ngIf="displayMessage.precoComDesconto">
+                          <p [innerHTML]="displayMessage.precoComDesconto"></p>
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="col-12 col-lg-3">
+                      <div class="form-group">          
+                        <label>Porcentagem Desconto %</label>
+                        <div class="input">             
+                         <input type="text" class="form-control" 
+                          id="porcentagemDeDesconto" formControlName="porcentagemDeDesconto" 
+                           placeholder="0,000" disabled>                         
+                        </div>                         
+                        <span class="text-danger" *ngIf="displayMessage.porcentagemDeDesconto">
+                          <p [innerHTML]="displayMessage.porcentagemDeDesconto"></p>
+                        </span>
+                      </div>
+                    </div>
+        
+                    <div class="col-12 col-lg-3">
+                      <div class="form-group">          
+                        <label>Preço c/ Desconto 2 <i class="icon-tag-price"></i></label>
+                        <div class="input">             
+                         <input type="text" class="form-control" 
+                          id="precoComDescontoDois" formControlName="precoComDescontoDois" 
+                          currencyMask placeholder="R$ 0,00"
+                          (blur)="calcularPorcentagemDeDesconto()">                         
+                        </div>                         
+                        <span class="text-danger" *ngIf="displayMessage.precoComDescontoDois">
+                          <p [innerHTML]="displayMessage.precoComDescontoDois"></p>
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="col-12 col-lg-3">
+                      <div class="form-group">          
+                        <label>Porcentagem Desconto 2 %</label>
+                        <div class="input">             
+                         <input type="text" class="form-control" 
+                          id="porcentagemDeDescontoDois" formControlName="porcentagemDeDescontoDois" 
+                           placeholder="0,000" disabled>                         
+                        </div>                         
+                        <span class="text-danger" *ngIf="displayMessage.porcentagemDeDescontoDois">
+                          <p [innerHTML]="displayMessage.porcentagemDeDescontoDois"></p>
+                        </span>
+                      </div>
+                    </div>
+
+                  </div> 
+                </div>               
+
+              </ng-template>
+            </li>  
+             
+            
+            <!-- Estoque -->
+            <li [ngbNavItem]="6" [disabled]="disable6">
+              <a ngbNavLink><i class="icon-box"></i> Estoque</a>
+              <ng-template ngbNavContent let-active>
+                
+                <div class="border rounded p-3 mb-3" >
+                  
+                  <div class="listas" formArrayName="estoques">                    
+                    <div class="board-column-tasks">
+                      <div class="item" [id]="i" *ngFor="let estoque of form.get('estoques')?.controls; let i = index">
+              
+                        <div class="counter">Loja: {{estoque.get('lojaNomeFantasia').value}}</div>         
+                    
+                        <br/>
+
+                        <ng-container [formGroupName]="i">
+              
+                          <div class="">                            
+                            <div class="row">
+                              
+                              <div class="col-12 col-lg-4">
+                                <div class="form-group mb-0">                                  
+                                  <label>Em Estoque <i class="icon-status"></i></label>
+                                  <input type="text" class="form-control" id="emEstoque" 
+                                    formControlName="emEstoque" name="emEstoque"
+                                    digitOnly pattern="[0-9 _,]*" placeholder="0,00"/>                                  
+                                  <div class="invalid-feedback"
+                                    *ngIf="estoque.get('emEstoque').hasError('required') && estoque.get('emEstoque').touched">
+                                    Informe o estoque atual do produto
+                                  </div>
+                                  <div class="invalid-feedback"
+                                    *ngIf="estoque.get('emEstoque').hasError('pattern') && estoque.get('emEstoque').touched">
+                                    Informe apenas números!
+                                  </div>
+                                </div> 
+                              </div>
+                              
+                              <div class="col-12 col-lg-4">
+                                <div class="form-group mb-0">                                  
+                                  <label>Estoque Mínimo <i class="icon-minus-circle-1"></i></label>
+                                  <input type="text" class="form-control" id="estoqueMinimo" 
+                                      formControlName="estoqueMinimo"
+                                      digitOnly pattern="[0-9 _,]*" placeholder="0,00"/>                                    
+                                  <div class="invalid-feedback"
+                                    *ngIf="estoque.get('estoqueMinimo').hasError('required') && estoque.get('estoqueMinimo').touched">
+                                    Informe o estoque mínimo do produto
+                                  </div>
+                                  <div class="invalid-feedback"
+                                    *ngIf="estoque.get('estoqueMinimo').hasError('pattern') && estoque.get('estoqueMinimo').touched">
+                                    Informe apenas números!
+                                  </div>
+                                </div> 
+                              </div>
+
+                              <div class="col-12 col-lg-4">
+                                <div class="form-group mb-0">                                  
+                                  <label>Estoque Máximo <i class="icon-plus-circle"></i></label>
+                                  <input type="text" class="form-control" id="estoqueMaximo" 
+                                    formControlName="estoqueMaximo"
+                                    digitOnly pattern="[0-9 _,]*" placeholder="0,00"/>
+                                  <div class="invalid-feedback"
+                                    *ngIf="estoque.get('estoqueMaximo').hasError('required') && estoque.get('estoqueMaximo').touched">
+                                    Informe o estoque máximo do produto
+                                  </div>
+                                  <div class="invalid-feedback"
+                                    *ngIf="estoque.get('estoqueMaximo').hasError('pattern') && estoque.get('estoqueMaximo').touched">
+                                    Informe apenas números!
+                                  </div>
+                                </div> 
+                              </div>                             
+
+                            </div> 
+                            
+                            <div class="row">
+
+                              <div class="col-12 col-lg-4">
+                                <div class="form-group w-100 mb-0">                                  
+                                  <div class="custom-control custom-checkbox my-2">
+                                    <input type="checkbox" class="custom-control-input" id="definirEstoqueMinEMaxAuto" 
+                                    formControlName="definirEstoqueMinEMaxAuto"/>
+                                    <label class="custom-control-label" for="definirEstoqueMinEMaxAuto">Definir Estoque Mínimo e Máximo Automáticamente</label>
+                                  </div>
+                                  <span class="text-danger" *ngIf="displayMessage.definirEstoqueMinEMaxAuto">
+                                    <p [innerHTML]="displayMessage.definirEstoqueMinEMaxAuto"></p>
+                                  </span>
+                                </div> 
+                              </div>
+
+                              <div class="col-12 col-lg-4">
+                                <div class="form-group mb-0">                                  
+                                  <label>Tempo de Reposição Em Dias <i class="icon-times-refresh"></i></label>
+                                  <input type="number" class="form-control" id="tempoDeReposicaoEmDias" 
+                                      formControlName="tempoDeReposicaoEmDias" min="0"/>
+                                  <div class="invalid-feedback"
+                                      *ngIf="estoque.get('tempoDeReposicaoEmDias').hasError('required') && estoque.get('tempoDeReposicaoEmDias').touched">
+                                      Informe o tempo de reposição em dias do produto
+                                  </div>                                    
+                                </div> 
+                              </div>
+
+                              <div class="col-12 col-lg-4">
+                                <div class="form-group mb-0">                                  
+                                  <label>Localização <i class="icon-search"></i></label>
+                                  <input type="text" class="form-control" id="localizacao" 
+                                    formControlName="localizacao" maxlength="20"/>                                  
+                                  <small class="text-muted">
+                                    {{estoque.get('localizacao').value.length}} de 20 caracteres
+                                  </small>      
+                                </div> 
+                              </div>
+
+                            </div>
+
+                          </div>
+              
+                        </ng-container>
+
+                      </div>
+                    </div>
+                  </div>              
+
+                </div>                 
+
+              </ng-template>
+            </li>  
+           
+            <!-- NCM -->
+            <li [ngbNavItem]="7" [disabled]="disable7">
+              <a ngbNavLink><i class="icon-flag"></i> NCM</a>
+              <ng-template ngbNavContent let-active>
+                
+                <div class="">
+  
+                  <div class="row border rounded p-3 mb-2">
+                    
+                    <div class="col-12 col-lg-6">
+                      <div class="form-group">          
+                        <label>Código do NCM</label>
+                        <div class="input">             
+                         <input type="text" class="form-control" 
+                          id="ncm" formControlName="ncm" 
+                          minlength="4" maxlength="8" pattern="[0-9]*">                         
+                        </div>  
+                        <small class="text-muted">
+                          {{form?.get('ncm').value.length}} de 8 caracteres
+                        </small>                                                 
+                        <span class="text-danger" *ngIf="displayMessage.ncm">
+                          <p [innerHTML]="displayMessage.ncm"></p>
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6">
+                      <div class="form-group">          
+                        <label>Código CEST</label>
+                        <div class="input">             
+                          <input type="text" class="form-control" 
+                          id="cest" formControlName="cest" digitOnly minlength="7" maxlength="7"
+                          pattern="[0-9]*">                              
+                        </div> 
+                        <small class="text-muted">
+                          {{form?.get('cest').value.length}} de 7 caracteres
+                        </small>                          
+                        <span class="text-danger" *ngIf="displayMessage.cest">
+                          <p [innerHTML]="displayMessage.cest"></p>
+                        </span>
+                      </div>
+                    </div>
+        
+                  </div>
+
+                </div>              
+
+              </ng-template>
+            </li> 
+
+            <!-- ICMS -->
+            <li [ngbNavItem]="8" [disabled]="disable8">
+              <a ngbNavLink><i class="icon-balance"></i> ICMS</a>
+              <ng-template ngbNavContent let-active>
+                
+                <div class="">
+  
+                  <div class="row border rounded p-3 mb-2">
+                    
+                    <div class="col-12 col-lg-3">
+                      <div class="form-group">
+                        <label>Alíquota <i class="icon-balance"></i></label>
+                        <div class="input">             
+                          <ng-select [multiple]="false" name="aliquotaId" id="aliquotaId" 
+                           formControlName="aliquotaId" class="ng-select form-control" 
+                           (blur)="validarForm()" (change)="aplicarCFOP()">
+                            <ng-option *ngFor="let aliquota of aliquotas" [value]="aliquota?.id">
+                             {{aliquota?.nome}}
+                            </ng-option>
+                          </ng-select>
+                        </div>                        
+                        <span class="text-danger" *ngIf="displayMessage.aliquotaId">
+                          <p [innerHTML]="displayMessage.aliquotaId"></p>
+                        </span>
+                      </div>
+                    </div>      
+
+                    <div class="col-12 col-lg-3">
+                      <div class="form-group">          
+                        <label>CFOP de Saída</label>
+                        <div class="input">             
+                          <input type="text" class="form-control" 
+                          id="cfopSaida" formControlName="cfopSaida" digitOnly minlength="4" maxlength="4"
+                          pattern="[0-9]*">                              
+                        </div> 
+                        <small class="text-muted">
+                          {{form?.get('cfopSaida').value.length}} de 4 caracteres
+                        </small>                          
+                        <span class="text-danger" *ngIf="displayMessage.cfopSaida">
+                          <p [innerHTML]="displayMessage.cfopSaida"></p>
+                        </span>
+                      </div>
+                    </div>
+        
+                    <div class="col-12 col-lg-6">
+                      <div class="form-group">          
+                        <label>Origem do Produto</label>
+                        <div class="input">
+                          <ng-select [multiple]="false" name="origem" id="origem" name="origem" formControlName="origem" 
+                            class="ng-select form-control" (blur)="validarForm()">                            
+                            <ng-option [value]=0>0 - Nacional - exceto 3, 4, 5 e 8</ng-option>
+                            <ng-option [value]=1>1 - Estrangeira - importação direta</ng-option>
+                            <ng-option [value]=2>2 - Estrangeira - adquirida no mercado interno</ng-option>
+                            <ng-option [value]=3>3 - Nacional - com conteúdo importado entre 40% e 70%</ng-option>
+                            <ng-option [value]=4>4 - Nacional  - conforme lei</ng-option>
+                            <ng-option [value]=5>5 - Nacional - com conteúdo importado inferior a 40%</ng-option>
+                            <ng-option [value]=6>6 - Estrangeira - importação direta sem similar nacional</ng-option>
+                            <ng-option [value]=7>7 - Estrangeira - adquirida no mercado interno sem similar nacional</ng-option>
+                            <ng-option [value]=8>8 - Nacional - com conteúdo importado superior a 70%</ng-option>
+                          </ng-select>              
+                        </div>                     
+                        <span class="text-danger" *ngIf="displayMessage.origem">
+                          <p [innerHTML]="displayMessage.origem"></p>
+                        </span>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>                         
+
+              </ng-template>
+            </li> 
+
+            <!-- PIS -->
+            <li [ngbNavItem]="9" [disabled]="disable9">
+              <a ngbNavLink><i class="icon-balance"></i> PIS</a>
+              <ng-template ngbNavContent let-active>
+                
+                <div class="">                
+                  
+                  <div class="row border rounded p-3 mb-3">          
+                    
+                    <div class="col-12 col-lg-12">
+                      <div class="form-group">          
+                        <label>CST do PIS</label>
+                        <div class="input">
+                          <ng-select [multiple]="false" name="cstPis" id="cstPis" name="cstPis" formControlName="cstPis" 
+                            class="ng-select form-control" (blur)="validarForm()">                                                      
+                            <ng-option *ngFor="let cstPis of valoresDeCSTdoPisECofins" [value]="cstPis?.id">
+                              {{cstPis?.descricao}}
+                            </ng-option>
+                          </ng-select>              
+                        </div>                     
+                        <span class="text-danger" *ngIf="displayMessage.cstPis">
+                          <p [innerHTML]="displayMessage.cstPis"></p>
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="col-12 col-lg-3">
+                      <div class="form-group">          
+                        <label>Tipo de Cálculo do PIS</label>
+                        <div class="input">
+                          <ng-select [multiple]="false" id="tipoDeCalculoDoPis" 
+                          name="tipoDeCalculoDoPis" formControlName="tipoDeCalculoDoPis" 
+                           class="ng-select form-control" (blur)="validarForm()">
+                           <ng-option *ngFor="let tipo of valoresDeTipoDeCalculodoPisECofins" [value]="tipo?.id">
+                             {{tipo?.descricao}}
+                           </ng-option>
+                          </ng-select>              
+                        </div>                     
+                        <span class="text-danger" *ngIf="displayMessage.tipoDeCalculoDoPis">
+                         <p [innerHTML]="displayMessage.tipoDeCalculoDoPis"></p>
+                        </span>
+                      </div>
+                    </div>
+                     
+                    <div class="col-12 col-lg-3">
+                       <div class="form-group">          
+                         <label>Alíquota do Pis</label>
+                         <div class="input">             
+                          <input type="text" class="form-control" 
+                           id="aliquotaDoPis" formControlName="aliquotaDoPis" 
+                           digitOnly pattern="[0-9 _,]*" placeholder="0,00"/>
+                         </div>                         
+                         <span class="text-danger" *ngIf="displayMessage.aliquotaDoPis">
+                           <p [innerHTML]="displayMessage.aliquotaDoPis"></p>
+                         </span>
+                       </div>
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </ng-template>
+            </li>
+
+             <!-- COFINS -->
+             <li [ngbNavItem]="10" [disabled]="disable10">
+              <a ngbNavLink><i class="icon-balance"></i> COFINS</a>
+              <ng-template ngbNavContent let-active>
+                
+                <div class="">                
+                  
+                  <div class="row border rounded p-3 mb-3">          
+                    
+                    <div class="col-12 col-lg-12">
+                      <div class="form-group">          
+                        <label>CST do Cofins</label>
+                        <div class="input">
+                          <ng-select [multiple]="false" name="cstCofins" id="cstCofins" formControlName="cstCofins" 
+                            class="ng-select form-control" (blur)="validarForm()">                                                      
+                            <ng-option *ngFor="let cstCofins of valoresDeCSTdoPisECofins" [value]="cstCofins?.id">
+                              {{cstCofins?.descricao}}
+                            </ng-option>
+                          </ng-select>              
+                        </div>                     
+                        <span class="text-danger" *ngIf="displayMessage.cstCofins">
+                          <p [innerHTML]="displayMessage.cstCofins"></p>
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="col-12 col-lg-3">
+                      <div class="form-group">          
+                        <label>Tipo de Cálculo do COFINS</label>
+                        <div class="input">
+                          <ng-select [multiple]="false" id="tipoDeCalculoDoCofins" 
+                          name="tipoDeCalculoDoCofins" formControlName="tipoDeCalculoDoCofins" 
+                           class="ng-select form-control" (blur)="validarForm()">
+                           <ng-option *ngFor="let tipo of valoresDeTipoDeCalculodoPisECofins" [value]="tipo?.id">
+                             {{tipo?.descricao}}
+                           </ng-option>
+                          </ng-select>              
+                        </div>                     
+                        <span class="text-danger" *ngIf="displayMessage.tipoDeCalculoDoCofins">
+                         <p [innerHTML]="displayMessage.tipoDeCalculoDoCofins"></p>
+                        </span>
+                      </div>
+                    </div>
+                     
+                    <div class="col-12 col-lg-3">
+                       <div class="form-group">          
+                         <label>Alíquota do Cofins</label>
+                         <div class="input">             
+                          <input type="text" class="form-control" 
+                           id="aliquotaDoCofins" formControlName="aliquotaDoCofins" 
+                           digitOnly pattern="[0-9 _,]*" placeholder="0,00"/>
+                         </div>                         
+                         <span class="text-danger" *ngIf="displayMessage.aliquotaDoCofins">
+                           <p [innerHTML]="displayMessage.aliquotaDoCofins"></p>
+                         </span>
+                       </div>
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </ng-template>
+            </li>
+
+            <!-- ANP -->
+            <li [ngbNavItem]="11" [disabled]="disable11">
+              <a ngbNavLink><i class="icon-balance"></i> ANP</a>
+              <ng-template ngbNavContent let-active>
+                
+                <div class="row border rounded p-3 mb-3" >
+                  
+                  <div class="col-12 col-lg-4">
+                    <div class="form-group">          
+                      <label>Código ANP</label>
+                      <div class="input">             
+                      <input type="text" class="form-control" 
+                        id="codigoANP" formControlName="codigoANP"
+                        maxlength="10" />
+                      </div>                         
+                      <span class="text-danger" *ngIf="displayMessage.codigoANP">
+                        <p [innerHTML]="displayMessage.codigoANP"></p>
+                      </span>
+                    </div>
+                  </div>
+                
+                  <div class="col-12 col-lg-8">
+                    <div class="form-group">          
+                      <label>Descrição ANP</label>
+                      <div class="input">             
+                        <input type="text" class="form-control" 
+                          id="descricaoANP" formControlName="descricaoANP" 
+                          maxlength="100"/>
+                      </div>                         
+                      <span class="text-danger" *ngIf="displayMessage.descricaoANP">
+                        <p [innerHTML]="displayMessage.descricaoANP"></p>
+                      </span>
+                    </div>
+                  </div>
+
+
+                  <div class="col-12 col-lg-3">
+                    <div class="form-group">          
+                      <label>pglp</label>
+                      <div class="input">             
+                      <input type="text" class="form-control" 
+                        id="pglp" formControlName="pglp"
+                        digitOnly pattern="[0-9 _,]*" placeholder="0,00" />
+                      </div>                         
+                      <span class="text-danger" *ngIf="displayMessage.pglp">
+                        <p [innerHTML]="displayMessage.pglp"></p>
+                      </span>
+                    </div>
+                  </div>
+                
+                  <div class="col-12 col-lg-3">
+                    <div class="form-group">          
+                      <label>pgnn</label>
+                      <div class="input">             
+                      <input type="text" class="form-control" 
+                        id="pgnn" formControlName="pgnn"
+                        digitOnly pattern="[0-9 _,]*" placeholder="0,00" />
+                      </div>                         
+                      <span class="text-danger" *ngIf="displayMessage.pgnn">
+                        <p [innerHTML]="displayMessage.pgnn"></p>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-3">
+                    <div class="form-group">          
+                      <label>pgni</label>
+                      <div class="input">             
+                      <input type="text" class="form-control" 
+                        id="pgni" formControlName="pgni"
+                        digitOnly pattern="[0-9 _,]*" placeholder="0,00" />
+                      </div>                         
+                      <span class="text-danger" *ngIf="displayMessage.pgni">
+                        <p [innerHTML]="displayMessage.pgni"></p>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-3">
+                    <div class="form-group">          
+                      <label>Valor de Partida</label>
+                      <div class="input">             
+                      <input type="text" class="form-control" 
+                        id="valorPartida" formControlName="valorPartida"
+                        digitOnly pattern="[0-9 _,]*" placeholder="0,00" />
+                      </div>                         
+                      <span class="text-danger" *ngIf="displayMessage.valorPartida">
+                        <p [innerHTML]="displayMessage.valorPartida"></p>
+                      </span>
+                    </div>
+                  </div>
+
+                </div>
+
+              </ng-template>
+            </li>            
+
+            <!-- Grade -->
+            <li [ngbNavItem]="12" [disabled]="disable12">
+              <a ngbNavLink><i class="icon-menu"></i> Grade</a>
+              <ng-template ngbNavContent let-active>
+                
+                <div class="row border rounded p-3 mb-2">
+                  <div class="col-12 col-lg-12">
+                    <div class="form-group">
+                      <label>Selecione uma grade já cadastrada ou deixe em branco para criar uma nova  <i class="icon-menu"></i></label>
+                      <div class="input">             
+                        <ng-select autofocus [multiple]="false" name="gradeId" id="gradeId" formControlName="gradeId"
+                         class="ng-select form-control" (blur)="validarForm()">
+                         <ng-option *ngFor="let grade of grades" [value]="grade?.id">
+                            {{grade?.descricao}}
+                          </ng-option>
+                        </ng-select>  
+                      </div>                        
+                      <span class="text-danger" *ngIf="displayMessage.gradeId">
+                        <p [innerHTML]="displayMessage.gradeId"></p>
+                      </span>
+                    </div>
+                   
+                  </div>
+                </div>
+
+                <div class="row border rounded p-3 mb-2">      
+                  <div class="col-12 col-lg-12">
+                    
+                    <div class="text-uppercase text-title">
+                      Novos Itens da Grade
+                    </div>            
+      
+                    <div class="aplicacoes" formArrayName="itensGrade">
+                      <hr />
+                      <div cdkDropList class="board-column-tasks" (cdkDropListDropped)="dropItemGrade($event)">
+                        <div class="aplicacao" [id]="i" *ngFor="let itemGrade of form.get('itensGrade')?.controls; let i = index"
+                          cdkDrag #elem="cdkDrag">
+                
+                          <div class="counter">{{ i + 1}}</div>         
+                          
+                          <ng-container [formGroupName]="i">
+                
+                            <div class="d-flex w-100">
+                              <button class="btn btn-sm mr-1 outline-0" cdkDragHandle style="cursor: move !important">
+                                <i class="icon-menu"></i>
+                              </button>
+                              
+                              <div class="row w-100">
+                                <div class="col-12 col-lg-6">
+                                  <div class="form-group w-100 mb-0">                                    
+                                    <label> Cor ou Tipo <i class=""></i></label>                                 
+                                    <input type="text" minlength="1" maxlength="50" class="form-control"
+                                      formControlName="corOuTipo" id="corOuTipo">
+                                    <small class="text-muted"
+                                      [ngClass]="{'is-invalid':itemGrade.get('corOuTipo').errors && itemGrade.get('corOuTipo').touched}">
+                                      {{itemGrade.get('corOuTipo').value.length}} de 50 caracteres
+                                    </small>
+                                    <div class="invalid-feedback"
+                                      *ngIf="itemGrade.get('corOuTipo').hasError('required') && itemGrade.get('corOuTipo').touched">
+                                      Cor ou Tipo é obrigatório
+                                    </div>
+                                  </div> 
+                                </div>
+
+                                <div class="col-12 col-lg-5">
+                                  <div class="form-group w-100 mb-0">   
+                                    <label>Tamanho ou Lado <i class=""></i></label>                                 
+                                    <input type="text" minlength="1" maxlength="50" class="form-control"
+                                      formControlName="tamanhoOuLado" id="tamanhoOuLado">
+                                    <small class="text-muted"
+                                      [ngClass]="{'is-invalid':itemGrade.get('tamanhoOuLado').errors && itemGrade.get('tamanhoOuLado').touched}">
+                                      {{itemGrade.get('tamanhoOuLado').value.length}} de 50 caracteres
+                                    </small>
+                                    <div class="invalid-feedback"
+                                      *ngIf="itemGrade.get('tamanhoOuLado').hasError('required') && itemGrade.get('tamanhoOuLado').touched">
+                                      Tamanho ou Lado é obrigatório
+                                    </div>
+                                  </div>    
+                                </div>
+
+                                <div class="col-12 col-lg-1">
+                                  
+                                  <div class="mt-1">
+                                    <button type="button" class="btn btn-sm text-danger"
+                                      ngbTooltip="Remover item" (click)="removerItemGradeDaLista(i)">
+                                      <i class="icon-times-circle mr-1"></i>
+                                    </button>
+                                  </div>                           
+      
+                                </div>
+                              </div>   
+                              
+                            </div>
+                
+                          </ng-container>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-end">
+                      <button type="button" class="btn btn-sm btn-add"                 
+                        [ngbTooltip]="'Adicionar aplicação'"
+                        (click)="adicionarItemGradeNaLista()">                  
+                        <i class="icon-plus-circle mr-1 mb-1"></i>Adicionar
+                      </button>
+                    </div>
+      
+                  </div>
+                </div> 
+                       
+
+              </ng-template>
+            </li> 
+
+            <!-- Imagem -->
+            <li [ngbNavItem]="13" [disabled]="disable13">
+              <a ngbNavLink><i class="icon-gallery"></i> Imagem</a>
+              <ng-template ngbNavContent let-active>
+                
+                <div class="row border rounded p-3 mb-3" >
+          
+                  <div class="col-lg-12">
+
+                    <form enctype="multipart/form-data" id="imagensForm">
+                
+                      <div class="modal-body">
+                        <div class="custom-dropzone" ngx-dropzone accept="image/*" 
+                            [multiple]="true" (change)="pegarImagens($event)">
+                            <ngx-dropzone-label>
+                              <h2>Arraste e solte o arquivo aqui ou clique para procurar</h2>
+                            </ngx-dropzone-label>                          
+                          </div>                          
+                      </div>                
+                      
+                    </form>                    
+
+                  </div>        
+
+                  <div class="col-lg-12">
+                    <div class="images">
+                      <div *ngFor="let foto of imagensBase64; let i = index;">
+                          <div class="d-flex align-items-center justify-content-center flex-column">
+                            <img [src]="foto.arquivoBase64">
+                            <button class="btn btn-sm btn-link text-danger" (click)="removerImagem(foto)">
+                              <i class="icon-trash me-1"></i>
+                              Excluir
+                            </button>
+                          </div>                            
+                        </div>
+                    </div>
+                  </div>
+
+                </div>                 
+
+              </ng-template>
+            </li>
+
+            <!-- Outros Dados -->
+            <li [ngbNavItem]="14" [disabled]="disable14">
+              <a ngbNavLink><i class="icon-services"></i> Outros Dados</a>
+              <ng-template ngbNavContent let-active>
+               
+                <div class="" >
+
+                  <div class="row border rounded p-3 mb-3" >
+          
+                    <div class="col-12 col-lg-4">
+                      <div class="form-group w-100 mb-0">                                  
+                        <div class="custom-control custom-checkbox my-2">
+                          <input type="checkbox" class="custom-control-input" id="imprimirEtiqueta" 
+                          formControlName="imprimirEtiqueta"/>
+                          <label class="custom-control-label" for="imprimirEtiqueta">Imprimir Etiqueta Automáticamente</label>
+                        </div>
+                        <span class="text-danger" *ngIf="displayMessage.imprimirEtiqueta">
+                          <p [innerHTML]="displayMessage.imprimirEtiqueta"></p>
+                        </span>
+                      </div> 
+                    </div>
+
+                    <div class="col-12 col-lg-3">
+                      <div class="form-group">          
+                        <label>Garantia em meses</label>
+                        <div class="input">             
+                        <input type="number" class="form-control" 
+                          id="qtdMesesGarantia" formControlName="qtdMesesGarantia" min="0"/>
+                        </div>                         
+                        <span class="text-danger" *ngIf="displayMessage.qtdMesesGarantia">
+                          <p [innerHTML]="displayMessage.qtdMesesGarantia"></p>
+                        </span>
+                      </div>
+                    </div>
+            
+                  </div>                 
+
+                </div>               
+
+              </ng-template>
+            </li>
+            
+          </ul>
+  
+          <div [ngbNavOutlet]="nav" class="mt-2"></div>          
+
+        </div>
+      </div>
+
+    </div>
+    
+
+    <div class="modal-footer">
+
+      <div class="d-flex align-items-center justify-content-between w-100">
+
+        <div class="d-flex align-items-center justify-content-end w-100">          
+
+          <div>
+            <button class="btn btn-sm btn-primary ml-2" (click)="voltarStep()" *ngIf="activeTabId != 1">
+              Voltar
+            </button>            
+          </div>  
+
+          <div>            
+            <button class="btn btn-sm btn-primary ml-2" (click)="proximoStep()" *ngIf="activeTabId != 14">
+              Próximo
+            </button>
+          </div>                 
+
+          <div>
+            <button type="button" class="btn btn-sm btn-success ml-2" (click)="save()" 
+              *ngIf="passouPorTodasAsAbas()">
+              Salvar
+            </button>
+          </div>
+        </div>
+
+      </div>
+  
+    </div>
+
+  </form>
+
+</div>

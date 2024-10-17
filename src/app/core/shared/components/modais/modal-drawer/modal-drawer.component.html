@@ -1,0 +1,23 @@
+<div class="modal-drawer" [ngClass]="{'show': modalOpen, 'hide': !modalOpen}">
+  <div class="drawer-modal">
+    <div class="modal-header">
+      <div class="text-uppercase modal-title text-title fs-18">{{titulo}}</div>
+      <button type="button" class="close" aria-label="Close" (click)="close()">
+        <i class="icon-times-circle"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <ng-content></ng-content>
+    </div>
+
+    <div class="modal-footer">
+      <div class="d-flex align-items-center justify-content-end w-100">
+        <button type="button" class="btn btn-link btn-sm" (click)="close()">Cancelar</button>
+        <button type="button" *ngFor="let button of buttons">
+          <i [class]="button.icon"></i>
+          {{button.text}}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<div class="d-flex justify-content-end">
+  <button class="btn text-white mt-2" (click)="loggoff()" ngbTooltip="Sair">
+    <span>
+      <i class="icon-power fs-28 mr-2"></i>
+    </span>
+  </button>
+</div>
+
+<div class="container">
+  <div class="form">
+    <div class="flex-column w-100">
+
+      <form class="box-search d-flex flex-column flex-md-row" [formGroup]="form" *ngIf="form">
+        <div class="label-float">
+          <div class="position-relative">
+            <input type="text" placeholder="Buscar Produtos" name="termo" id="termo"
+              formControlName="termo" (keyup.enter)="buscar()">
+            <i class="fs-20 icon-info-circle position-absolute"
+              ngbTooltip="Não sabe o que procurar ? Busque por nome, autor, assunto."
+              style="top: 20px; right: 10px;"></i>
+          </div>          
+        </div>
+
+        <div class="buttons">
+          <button type="button" class="btn-pesquisar" (click)="buscar()">
+            Pesquisar
+          </button>          
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>

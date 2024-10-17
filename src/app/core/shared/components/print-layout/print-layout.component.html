@@ -1,0 +1,32 @@
+<div class="modal-header">
+  <div class="text-uppercase modal-title text-title fs-18">Preview pdf</div>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.close('close')">
+    <i class="icon-times-circle"></i>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="content-impressao" id="print-area">
+    asfasfasfas
+    <div class="row">
+      <div class="col">
+        <span class="small text-muted">22/06/1995</span>
+        <p>{{diaHoje | date :'dd/MM/yyyy'}}</p>
+      </div>
+
+    </div>
+    <div class="row mb-2">
+      <div class="col text-center">
+        <h4>
+          <img style="height: 100px; width: 100px; object-fit: cover;" [src]="logoCondo" alt="CondomínioApp"> &nbsp;
+          - Tes - Palmeiras
+        </h4>
+        <p class="text-center">
+          {{diaHoje | date :'dd/MM/yyyy'}}
+          sdgdagds: {{diaHoje | date :'dd/MM/yyyy'}}
+        </p>
+      </div>
+    </div>
+dgdgdsg
+    <span [innerHTML]="returnHTMLSanitize(content)?.changingThisBreaksApplicationSecurity"></span>
+  </div>
+</div>

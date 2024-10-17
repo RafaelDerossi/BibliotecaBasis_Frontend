@@ -1,0 +1,60 @@
+<div class="perfil-unidade">
+  <div class="perfil-actions">
+    <div>
+      <h4>Aplicações do Produto</h4>
+    </div>
+    <div>
+    </div>
+  </div>
+
+ 
+  <div *ngIf="produto.aplicacoes?.length > 0">
+    <div class="align-items-center d-flex flex-column text-center text-title"
+      *ngIf="produto.estoques?.length === 0">
+      <img src="assets/mascote/gato-preto.png" alt="" class="img-fluid w-20 w-md-10" />
+      <div class="alert alert-warning">
+        <strong>Nenhuma aplicação cadastrada</strong>
+      </div>                   
+    </div>
+
+    <div class="table-responsive" *ngIf="produto.aplicacoes?.length > 0">
+
+      <table class="table border-top-0">
+        <thead>
+          <tr>                                    
+            <th scope="col">Montadora</th>
+            <th scope="col">Descrição</th>            
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let aplicacao of produto.aplicacoes | slice: (currentPage-1) * itemsPerPage : (currentPage-1) * itemsPerPage + itemsPerPage">
+            <td>{{aplicacao?.montadoraNome| titlecase}}</td>                          
+            <td>{{aplicacao?.descricao| titlecase}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+    <div class="d-flex align-items-center justify-content-between flex-column flex-md-row mt-3">
+      <ngb-pagination [collectionSize]="produto.aplicacoes?.length" #numPages [pageSize]="itemsPerPage"
+        [(page)]="currentPage" (pageChange)="onPageChange(currentPage)" [maxSize]="5" [rotate]="true">
+      </ngb-pagination>
+      <div class="d-flex white-space-nowrap text-title">
+        <label for="itemsPerPage">Itens por página </label>
+        <select [(ngModel)]="itemsPerPage" (change)="itemsPerPage = itemsPerPage"
+          class="form-control form-control-sm ml-2" name="itemsPerPage" id="itemsPerPage">
+          <option value="" hidden>Selecione</option>
+          <option [ngValue]="2">2</option>
+          <option [ngValue]="4">4</option>
+          <option [ngValue]="8">8</option>
+          <option [ngValue]="12">12</option>
+          <option [ngValue]="16">16</option>
+          <option [ngValue]="20">20</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  
+</div>

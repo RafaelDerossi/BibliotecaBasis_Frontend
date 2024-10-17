@@ -1,0 +1,44 @@
+<div class="position-relative">
+  <div id="menu-tabs" class="flex-fill">
+    <ul class="nav nav-tabs" #elementTabs>
+      <li class="nav-item cursor-pointer position-relative" *ngFor="let tab of tabs; let i = index">
+        <button type="button" class="nav-link" [ngClass]="{'active': tab.status, 'remove-btn-close': !statusClose}"
+          [ngStyle]="{'width': tabWidth + 'px'}" (click)="selectTab(tab, i)" [ngbTooltip]="tab.tooltip">
+          <i [class]="tab.icon"></i>
+          <span [innerHTML]="tab.title"></span>
+          <!-- <div class="btn-close" (click)="closePdf(i)" *ngIf="statusClose">
+            <i class="ta-times fs-14"></i>
+          </div> -->
+        </button>
+      </li>
+      <!-- <li class="nav-item position-relative" *ngIf="inputActive == 0">
+                <div class="mx-1 p-1 tab-form">
+                    <span class="clean" (click)="buscaConcessao = ''" *ngIf="buscaConcessao !== ''">
+                        <i class="fs-10 ta-times text-blue-light"></i>
+                    </span>
+                    <input type="text" class="form-control form-control-sm" [(ngModel)]="buscaConcessao"
+                        placeholder="Buscar por  subestação ou concessão">
+                    <span class="btn-search">
+                        <i class="ta-search text-blue-light"></i>
+                    </span>
+                </div>
+            </li>
+
+            <li class="nav-item position-relative" *ngIf="inputActive == 1">
+                <div class="mx-1 p-1 tab-form">
+                    <span class="clean" (click)="buscarAgentes = ''" *ngIf="buscarAgentes !== ''">
+                        <i class="fs-10 ta-times text-blue-light"></i>
+                    </span>
+                    <input type="text" class="form-control form-control-sm" [(ngModel)]="buscarAgentes"
+                        placeholder="Buscar por  subestação ou concessão 2">
+                    <span class="btn-search">
+                        <i class="ta-search text-blue-light"></i>
+                    </span>
+                </div>
+            </li> -->
+    </ul>
+  </div>
+</div>
+<div class="tab-content flex-fill">
+  <ng-content></ng-content>
+</div>

@@ -1,0 +1,82 @@
+<div [class]="modalbackgroundStorageSelected">
+  
+  <div class="modal-header">
+    
+    <div class="text-uppercase modal-title text-title fs-18 ml-2">{{action}}</div>   
+
+    <button type="button" class="close text-danger" aria-label="Close" (click)="activeModal.close(action)">
+      <i class="icon-times-circle"></i>
+    </button>
+
+  </div>  
+  
+  
+
+  <form [formGroup]="form" class="form p-3">
+    <div class="container-fluid">
+    
+      <div class="alert border-danger text-danger font-weight-bold d-flex align-items-center my-2 fs-14"
+      *ngIf="errorMessage.length > 0">
+        <div class="mr-3">
+          <i class="icon-alert fs-24"></i>
+        </div>
+        <div>
+          <ng-container *ngFor="let error of errorMessage">
+            {{error}}
+          </ng-container>
+        </div>
+      </div>      
+
+      <div class="row">
+        <div class="col-12">
+          
+          <div class="row border rounded p-1 mb-1">      
+            <div class="col-12 col-lg-12">
+              <div class="form-group">          
+                <label>Nome</label>
+                <div class="input">
+                  <input type="text" class="form-control" minlength="1" maxlength="40" 
+                   autofocus id="nome" placeholder="" formControlName="nome">            
+                </div> 
+                <small class="text-muted">
+                  {{form.get('nome').value.length}} de 40 caracteres
+                </small>
+                <span class="text-danger" *ngIf="displayMessage.nome">
+                  <p [innerHTML]="displayMessage.nome"></p>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    
+
+    <div class="modal-footer">
+
+      <div class="d-flex align-items-center justify-content-between w-100">
+
+        <div class="d-flex align-items-center justify-content-end w-100">
+  
+          <div>
+            <button type="button" class="btn btn-sm btn-danger ml-2" 
+            (click)="activeModal.close('close')">
+              Cancelar
+             </button>
+          </div>
+  
+          <div>
+            <button type="button" class="btn btn-sm btn-success ml-2" (click)="salvar()">
+              Salvar
+            </button>
+          </div>
+        </div>
+
+      </div>
+  
+    </div>
+
+  </form>
+
+</div>

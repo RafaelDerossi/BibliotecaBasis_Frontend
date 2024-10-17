@@ -1,0 +1,81 @@
+<div class="perfil-unidade">
+  <div class="perfil-actions">
+    
+    <div>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-md-6">
+      <div class="perfil-detalhes">
+        <ul class="list-style-none pl-0">     
+          <li>
+            Preço:
+            <h5><strong>{{produto?.preco | currency: 'R$'}}</strong></h5>
+          </li>
+          <li>
+            Preço c/Desconto:
+            <h5><strong>{{produto?.precoComDesconto | currency: 'R$'}} = {{produto?.porcentagemDeDesconto}}% de desconto</strong></h5>
+          </li>
+          <li>
+            Preço c/Desconto 2:
+            <h5><strong>{{produto?.precoComDescontoDois | currency: 'R$'}}  = {{produto?.porcentagemDeDescontoDois}}% de desconto</strong></h5>
+          </li>
+          <li>
+            Preço de Custo:
+            <h5><strong>{{produto?.precoDeCusto | currency: 'R$'}}</strong></h5>
+          </li>
+          <li>
+            Preço Sugerido:
+            <h5><strong>{{produto?.precoSugerido | currency: 'R$'}}</strong></h5>
+          </li>         
+        </ul>        
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="perfil-detalhes">
+        <ul class="list-style-none pl-0">     
+               
+          <li>
+            Mark-up cadastrado:
+            <h5><strong>{{produto?.markup}}%</strong></h5>
+          </li> 
+          <li>
+            Mark-up atual:
+            <h5><strong>{{produto?.markupAtual}}%</strong></h5>
+          </li> 
+          <li>
+            Mark-up atual c/Desconto:
+            <h5><strong>{{produto?.markupAtualComDesconto}}%</strong></h5>
+          </li> 
+          <li>
+            Mark-up atual c/Desconto 2:
+            <h5><strong>{{produto?.markupAtualComDescontoDois}}%</strong></h5>
+          </li>                              
+          <li class="d-flex align-items-center">
+            Unidade:
+            <span class="mx-2">
+              <h5><strong> {{produto?.unidadeAbreviacao}}</strong></h5>
+            </span>             
+          </li>
+          <li class="d-flex align-items-center">
+            Fator Multiplicador:
+            <span class="mx-2">
+              <h5><strong>{{produto?.fatorMultiplicador}}</strong></h5>
+            </span>                
+          </li>          
+        </ul>        
+      </div>
+    </div>
+
+  </div>  
+</div>
+
+<!-- <app-card-usuario-na-unidade [moradores]="unidade?.moradores" [unidadeSelecionada]="unidade" (evento)="init()">
+</app-card-usuario-na-unidade>
+
+<app-card-veiculo [unidade]="unidade" [veiculos]="unidade?.veiculos" [vagas]="unidade?.vagas" [loading]="loading"
+  (veiculoAdicionado)="init()">
+</app-card-veiculo> -->

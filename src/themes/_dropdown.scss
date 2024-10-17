@@ -1,0 +1,31 @@
+.dropdown-item {
+  border-bottom: solid 2px $gray-300;
+  font-size: 14px;
+  font-weight: 500;
+  color: $gray;
+
+  &:last-child {
+    border-bottom-color: transparent;
+  }
+}
+
+.dropdown-menu {
+  background-color: $grayLight1;
+  margin-top: 26px;
+  &.show {
+    &::before {
+      content: " ";
+      display: block;
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      background: linear-gradient(-45deg, transparent 0%, transparent 50%, $grayLight1 50%, $grayLight1 100%);
+      top: -11px;
+      right: 18px;
+      transform: rotate(45deg);
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      border-width: 1px 0 0 1px;
+      z-index: -1;
+    }
+  }
+}

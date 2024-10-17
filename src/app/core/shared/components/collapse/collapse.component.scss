@@ -1,0 +1,33 @@
+@import "components-base";
+
+header.card {
+  cursor: pointer;
+  .icon-handle {
+    transition: transform ease 300ms;
+    color: inherit;
+  }
+  .icone {
+    color: $white;
+    font-family: $icomoon-font-family;
+    &:before {
+      content: $icon-arrow-down;
+    }
+  }
+
+  &.collapsed {
+    .icon-handle {
+      color: $gray;
+    }
+    .icone {
+      color: $secondary;
+      font-family: $icomoon-font-family;
+      &:before {
+        content: $icon-arrow-right;
+      }
+    }
+  }
+}
+
+.card-body {
+  padding: 0;
+}

@@ -1,0 +1,134 @@
+.form-group {
+  position: relative;
+  label {
+    color: white;
+    text-transform: uppercase;
+    // font-weight: bold;
+    font-weight: 500;
+    font-size: 14px;
+    sup {
+      color: $error;
+      font-size: 14px;
+      font-weight: bold;
+    }
+  }
+
+  &.form-icone {
+    i {
+      position: absolute;
+      top: 10px;
+      z-index: 10;
+      left: 10px;
+    }
+    input {
+      padding-left: 30px;     
+    }
+  }
+
+  input {
+    position: relative;
+    &:focus {
+      border: 3px solid transparentize($primary, 0.1);
+    }
+  } 
+  
+  select {
+    position: relative;
+    &:focus {
+      border: 3px solid transparentize($primary, 0.1) !important;
+    }
+  }
+
+  textarea {
+    &.form-control {
+      resize: none;
+    }
+  }
+
+  .ng-select { 
+    border: 0;    
+    &.form-control {
+      background-color: transparent;
+      margin: 0;
+      padding: 0;
+      height: 42px;             
+    }    
+  }
+}
+
+
+
+// .custom-control {
+//   .custom-control-input {
+//     display: none;
+//     position: relative;
+//     visibility: hidden;
+
+//     + .custom-control-label {
+//       padding-left: 1em;
+//       color: $primary;
+
+//       &::before {
+//         color: inherit;
+//         font-family: "condominioapp" !important;
+//         display: inline-block;
+//         position: absolute;
+//         top: 0;
+//         left: 55px;
+//         content: $icon-radio-unchecked;
+//       }
+//     }
+
+//     &:checked {
+//       + .custom-control-label {
+//         &::before {
+//           content: $icon-radio-checked;
+//         }
+//       }
+//     }
+
+//     &[type="checkbox"] {
+//       + .custom-control-label {
+//         &::before {
+//           content: $icon-checkbox-unchecked;
+//         }
+//       }
+
+//       &:checked {
+//         + .custom-control-label {
+//           &::before {
+//             content: $icon-checkbox-checked;
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
+
+// .custom-control-input{
+//   &:checked ~ .custom-control-label {
+//     &::before {
+//       color: #fff;
+//       border-color: $primary;
+//       background-color: $primary;
+//     }
+//   }
+// }
+
+.custom-control-input {
+  &:checked ~ .custom-control-label {
+    &::before {
+      color: #fff;
+      border-color: $primary;
+      background-color: $primary;
+    }
+  }
+}
+
+input[type="file"]::before {
+  content: "";
+  display: inline-block;
+}
+::-webkit-file-upload-button {
+  display: inline-block;
+}

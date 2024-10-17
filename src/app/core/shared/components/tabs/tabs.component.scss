@@ -1,0 +1,88 @@
+@import "components-base";
+
+#menu-tabs {
+  .nav-tabs {
+    .nav-item {
+      .nav-link {
+        background-color: $grayLight6;
+        width: 250px;
+        white-space: nowrap;
+        overflow: hidden;
+        padding: 0.5rem 2.5rem 0.5rem 1rem;
+        color: $grayLight7;
+        font-family: "Raleway", sans-serif;
+        font-weight: 600;
+        text-overflow: ellipsis;
+        text-align: justify;
+        border-color: #dee2e6 #dee2e6 $white;
+        //border-bottom: solid 1px #dee2e6;
+        outline: none;
+        //transition: all 0.1s linear;
+
+        .btn-close {
+          position: absolute;
+          top: 0;
+          right: 0;
+          padding: 9px 14px 9px 14px;
+          cursor: pointer;
+        }
+
+        &.active {
+          background-color: $white !important;
+          color: $grayLight7 !important;
+          //border-bottom: solid 1px $white;
+          cursor: default !important;
+        }
+
+        &:hover {
+          background-color: $secondary;
+          color: $white;
+        }
+      }
+
+      .remove-btn-close {
+        padding: 0.5rem 1rem 0.5rem 1rem !important;
+      }
+
+      .tab-form {
+        input {
+          width: 300px;
+          padding: 15px;
+          padding-left: 20px;
+        }
+        .clean {
+          position: absolute;
+          cursor: pointer;
+          top: 8px;
+          left: 13px;
+        }
+        .btn-search {
+          position: absolute;
+          cursor: pointer;
+          top: 5px;
+          right: -25px;
+          font-size: 22px;
+          background: $grayLight3;
+          width: 30px;
+          height: 30px;
+          border-radius: 5px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          opacity: 0.6;
+          &:hover {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+}
+
+.d-none {
+  display: none !important;
+}
+
+.rounded {
+  border-radius: 0.75rem !important;
+}

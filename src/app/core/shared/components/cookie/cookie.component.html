@@ -1,0 +1,18 @@
+<ng-container *ngIf="!acceptCookie">
+  <div class="cookie-container">
+    <div class="cookie-message">
+      <!-- <img src="assets/mascote/cookie.png" alt="Mascote" class="img-fluid" /> -->
+      <p class="text-justify p-3">
+        Nós usamos cookies e outras tecnologias semelhantes para melhorar a sua experiência em nossos serviços,
+        personalizar
+        publicidade e recomendar conteúdo de seu interesse. Ao utilizar nossos serviços, você concorda com nossa
+        <a href="#" target="_blank">Saiba mais.</a>
+      </p>
+      <br />
+      <button class="cookie-button" (click)="aceitarCookie()">
+        OK, Concordo!
+      </button>
+    </div>
+  </div>
+
+</ng-container>

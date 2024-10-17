@@ -1,0 +1,18 @@
+@import "components-base";
+
+.notification {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  img {
+    width: 85px;
+    height: 85px;
+    margin-bottom: 20px;
+    object-fit: contain;
+  }
+  .title {
+  }
+  .message {
+  }
+}

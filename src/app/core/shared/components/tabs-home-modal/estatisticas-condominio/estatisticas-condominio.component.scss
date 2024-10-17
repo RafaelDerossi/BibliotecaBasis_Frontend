@@ -1,0 +1,58 @@
+@import "components-base";
+
+
+.box-dados {
+  display              : grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows   : 1fr 1fr 1fr;
+  grid-gap             : 10px;
+  align-items          : center;
+  justify-content      : center;
+  text-align           : center;
+  place-items          : center;
+
+  .box-dados-detalhes {
+    align-items    : center;
+    justify-content: center;
+    display        : flex;
+    flex-direction : column;
+    width          : 200px;
+    height         : 100px;
+    padding        : 5px;
+    border-radius  : 5px;
+
+    &:hover {
+      border: 1px dotted $primary;
+    }
+
+    h6 {
+      color         : $primary;
+      font-weight   : bold;
+      text-transform: uppercase;
+      font-size     : 14px;
+    }
+
+    p {
+      color      : #7c7c7f;
+      font-weight: bold;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .box-dados {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows   : 1fr;
+
+    .box-dados-detalhes {
+      text-align: center;
+    }
+  }
+}
+
+@media (max-width: 425px) {
+  .box-dados {
+    grid-template-columns: 1fr;
+    grid-template-rows   : 1fr;
+  }
+}

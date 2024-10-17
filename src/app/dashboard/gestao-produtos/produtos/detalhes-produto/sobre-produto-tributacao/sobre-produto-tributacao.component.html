@@ -1,0 +1,68 @@
+<div class="perfil-unidade">
+  <div class="perfil-actions">
+    
+    <div>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-md-6">
+      <div class="perfil-detalhes">
+        <ul class="list-style-none pl-0">                         
+          <li>
+            Código do NCM e CEST:
+            <h5><strong>{{produto?.ncm}} - {{produto?.cest}}</strong></h5>
+          </li>
+          <li>
+            ICMS:
+            <ul class="list-style-none pl-0">     
+              <li>
+                CFOP Saída:
+                 <h5><strong>{{produto?.cfopSaida}}</strong></h5>
+               </li>          
+              <li>
+                 - Alíquota:
+                <h5><strong>{{produto?.aliquotaCodigo}} - {{produto?.aliquotaNome}}</strong></h5>
+              </li>
+              <li>
+                - Origem:
+               <h5><strong>{{produto?.origem}}</strong></h5>
+             </li>
+              <li>
+                 - CST Normal/Simples Nacional:
+                <h5><strong>{{produto?.aliquotaCstTributacaoNormal}} - {{produto?.aliquotaCstSimplesNacional}}</strong></h5>
+              </li>
+            </ul>            
+          </li>        
+        </ul>        
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="perfil-detalhes">
+        <ul class="list-style-none pl-0">     
+          <li>
+            PIS/COFINS:
+            <ul class="list-style-none pl-0">               
+              <li>
+                 - Alíquota:
+                <h5><strong>{{produto?.aliquotaDoPis}} - {{produto?.aliquotaDoCofins}}</strong></h5>
+              </li>             
+              <li>
+                 - CST:
+                <h5><strong>{{produto?.cstPis}} - {{produto?.cstCofins}}</strong></h5>
+              </li>
+              <li>
+                - Tipo de Calculo:
+               <h5><strong>{{produto?.tipoDeCalculoDoPis}} - {{produto?.tipoDeCalculoDoCofins}}</strong></h5>
+             </li>
+            </ul>            
+          </li>          
+        </ul>        
+      </div>
+    </div>
+
+  </div> 
+  
+</div>

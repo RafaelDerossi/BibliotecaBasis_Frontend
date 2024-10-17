@@ -1,0 +1,76 @@
+<div class="perfil-unidade">
+  <div class="perfil-actions">
+    <div>
+      <h4>Estoque do Produto</h4>
+    </div>
+    <div>
+    </div>
+  </div>
+
+ 
+  <div *ngIf="produto.estoques?.length > 0">
+    <div class="align-items-center d-flex flex-column text-center text-title"
+      *ngIf="produto.estoques?.length === 0">
+      <img src="assets/mascote/gato-preto.png" alt="" class="img-fluid w-20 w-md-10" />
+      <div class="alert alert-warning">
+        <strong>Nenhum estoque encontrado</strong>
+      </div>                   
+    </div>
+
+    <div class="table-responsive" *ngIf="produto.estoques?.length > 0">
+
+      <table class="table border-top-0">
+        <thead>
+          <tr>                                    
+            <th scope="col">Loja</th>
+            <th scope="col">Em Estoque</th>
+            <th scope="col">Localização</th>
+            <th scope="col">Última Alteração</th>
+            <th scope="col">Tipo Última Alteração</th>
+            <th scope="col">Estoque Mínimo - Máximo</th>            
+            <th scope="col">Definir Estoque Min. e Max. Automáticamente</th>
+            <th scope="col">Última Alteração Min. e Max.</th>
+            <th scope="col">Tempo de Reposição em Dias</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let produto of produto.estoques | slice: (currentPage-1) * itemsPerPage : (currentPage-1) * itemsPerPage + itemsPerPage"
+            [ngClass]="{'text-attention':produto?.emEstoque <= 0}">
+            <td>{{produto?.lojaNome}}</td>                          
+            <td>{{produto?.emEstoque}}</td>
+            <td>{{produto?.localizacao | titlecase}}</td>                              
+            <td>{{produto?.ultimaAlteracaoDoEstoque}}</td>
+            <td>{{produto?.tipoDaUltimaAlteracaoDoEstoqueDescricao}}</td>
+            <td>{{produto?.estoqueMinimo}} - {{produto?.estoqueMaximo}}</td>            
+            <td *ngIf="produto.definirEstoqueMinEMaxAuto == false">NÃO</td>
+            <td *ngIf="produto.definirEstoqueMinEMaxAuto == true">SIM</td>
+            <td>{{produto?.ultimaAlteracaoDoEstoqueMinEMax}}</td>
+            <td>{{produto?.tempoDeReposicaoEmDias}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+    <div class="d-flex align-items-center justify-content-between flex-column flex-md-row mt-3">
+      <ngb-pagination [collectionSize]="produto.estoques?.length" #numPages [pageSize]="itemsPerPage"
+        [(page)]="currentPage" (pageChange)="onPageChange(currentPage)" [maxSize]="5" [rotate]="true">
+      </ngb-pagination>
+      <div class="d-flex white-space-nowrap text-title">
+        <label for="itemsPerPage">Itens por página </label>
+        <select [(ngModel)]="itemsPerPage" (change)="itemsPerPage = itemsPerPage"
+          class="form-control form-control-sm ml-2" name="itemsPerPage" id="itemsPerPage">
+          <option value="" hidden>Selecione</option>
+          <option [ngValue]="2">2</option>
+          <option [ngValue]="4">4</option>
+          <option [ngValue]="8">8</option>
+          <option [ngValue]="12">12</option>
+          <option [ngValue]="16">16</option>
+          <option [ngValue]="20">20</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  
+</div>

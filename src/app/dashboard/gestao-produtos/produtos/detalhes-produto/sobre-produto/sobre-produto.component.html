@@ -1,0 +1,163 @@
+<div class="perfil-unidade">
+  <div class="perfil-actions">    
+    <div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="perfil-detalhes">
+        <ul class="list-style-none pl-0">               
+          <li>
+            Descrição Completa:
+            <h5><strong>{{produto?.descricaoComGrade}}</strong></h5>
+          </li>         
+        </ul>        
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-md-6">
+      <div class="perfil-detalhes">
+        <ul class="list-style-none pl-0">     
+          <li>        
+            Grupo:
+            <h5><strong>{{produto?.grupoNome}}</strong></h5>
+          </li>                  
+        </ul>        
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="perfil-detalhes">
+        <ul class="list-style-none pl-0">     
+          <li>        
+            Subgrupo:
+            <h5><strong>{{produto?.subgrupoNome}}</strong></h5>
+          </li>            
+        </ul>        
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+
+    <div class="col-md-6">
+      <div class="perfil-detalhes">
+        <ul class="list-style-none pl-0">                 
+          <li>
+            Fábrica:
+            <h5><strong>{{produto?.fabricaNome}}</strong></h5>
+          </li>                         
+        </ul>        
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="perfil-detalhes">
+        <ul class="list-style-none pl-0">     
+          <li>
+            Descrição de PDV:
+            <h5><strong>{{produto?.descricaoDePDV}}</strong></h5>
+          </li>     
+        </ul>        
+      </div>
+    </div>
+
+  </div> 
+
+  <div class="row">
+
+    <div class="col-md-6">
+      <div class="perfil-detalhes">
+        <ul class="list-style-none pl-0">          
+          <li>        
+            GTIN:
+            <h5><strong>{{produto?.gtin}}</strong></h5>
+          </li>
+        </ul>        
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="perfil-detalhes">
+        <ul class="list-style-none pl-0">          
+          <li>
+            Preço:
+            <h5><strong>{{produto?.preco | currency: 'R$'}} - {{produto?.precoComDesconto | currency: 'R$'}} - {{produto?.precoComDescontoDois | currency: 'R$'}}</strong></h5>
+          </li>
+        </ul>        
+      </div>
+    </div>
+
+  </div>
+  
+
+  <div class="row">
+
+    <div class="col-md-6">
+      <div class="perfil-detalhes">
+        <ul class="list-style-none pl-0">          
+          <li class="d-flex align-items-center">
+            Unidade:
+            <span class="mx-2">
+              <h5><strong> {{produto?.unidadeAbreviacao}}</strong></h5>
+            </span>             
+          </li>
+        </ul>        
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="perfil-detalhes">
+        <ul class="list-style-none pl-0">          
+          <li class="d-flex align-items-center">
+            Fator Multiplicador:
+            <span class="mx-2">
+              <h5><strong>{{produto?.fatorMultiplicador}}</strong></h5>
+            </span>                
+          </li>          
+        </ul>        
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="row">
+
+    <div class="col-md-6">
+      <div class="perfil-detalhes">
+        <ul class="list-style-none pl-0">          
+          <li class="d-flex align-items-center">
+           
+          </li>
+        </ul>        
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="perfil-detalhes">
+        <ul class="list-style-none pl-0">              
+          <li class="d-flex align-items-center">
+            Estoque Total:
+            <span class="mx-2">
+            <h5><strong>{{produto?.estoqueTotal}}</strong></h5>
+            </span>           
+          </li>
+        </ul>        
+      </div>
+    </div>
+    
+  </div>  
+</div>
+
+<!-- <app-card-usuario-na-unidade [moradores]="unidade?.moradores" [unidadeSelecionada]="unidade" (evento)="init()">
+</app-card-usuario-na-unidade>
+
+<app-card-veiculo [unidade]="unidade" [veiculos]="unidade?.veiculos" [vagas]="unidade?.vagas" [loading]="loading"
+  (veiculoAdicionado)="init()">
+</app-card-veiculo> -->

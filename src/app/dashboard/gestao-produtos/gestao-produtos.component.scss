@@ -1,0 +1,59 @@
+@import "components-base";
+
+.container {
+  height: 100vh;
+}
+
+.menu {
+  .menu-item {
+    background-color: $primary;
+    border-radius: 0.25rem;
+    padding: 0.5rem 1rem;
+    color: $white;
+    outline: none;
+    border: none;
+    margin-right: 10px;
+    &:last-child {
+      margin-right: 0px;
+    }
+    &.active {
+      background-color: $secondary;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .mobile-opcoes {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .menu {
+    background-color: #fff;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 0px;
+    transition: all 0.3s ease-in-out;
+    z-index: 2;
+    &.show {
+      height: 240px;
+    }
+    .menu-item {
+      display: block;
+      padding: 0.5rem 1rem;
+      outline: none;
+      border-radius: 0;
+      width: 100%;
+      border: none;
+      border-bottom: 1px solid #ccc;
+      background-color: #e4e4e4;
+      color: #343434;
+      text-align: left;
+      &.active {
+        color: #fff;
+      }
+    }
+  }
+}

@@ -1,0 +1,140 @@
+<div [class]="modalbackgroundStorageSelected">
+  
+  <div class="modal-header">
+    
+    <div class="text-uppercase modal-title text-title fs-18 ml-2">{{action}}</div>   
+
+    <button type="button" class="close text-danger" aria-label="Close" (click)="activeModal.close(action)">
+      <i class="icon-times-circle"></i>
+    </button>
+
+  </div>  
+  
+  
+
+  <form [formGroup]="form" class="form p-3">
+    <div class="container-fluid">
+    
+      <div class="alert border-danger text-danger font-weight-bold d-flex align-items-center my-2 fs-14"
+      *ngIf="errorMessage.length > 0">
+        <div class="mr-3">
+          <i class="icon-alert fs-24"></i>
+        </div>
+        <div>
+          <ng-container *ngFor="let error of errorMessage">
+            {{error}}
+          </ng-container>
+        </div>
+      </div>      
+
+      <div class="row">
+        <div class="col-12">
+          
+          <div class="row border rounded p-1 mb-1">      
+           
+            <div class="col-12 col-lg-12">
+              <div class="form-group">          
+                <label>Nome</label>
+                <div class="input">
+                  <input type="text" class="form-control" minlength="1" maxlength="100" 
+                   autofocus id="nome" placeholder="" formControlName="nome">
+                </div> 
+                <small class="text-muted">
+                  {{form.get('nome').value.length}} de 100 caracteres
+                </small>
+                <span class="text-danger" *ngIf="displayMessage.nome">
+                  <p [innerHTML]="displayMessage.nome"></p>
+                </span>
+              </div>
+            </div>          
+
+            <div class="col-12 col-lg-12">
+              <div class="form-group">
+                <label>Valor</label>                
+                <ng-select [multiple]="false" name="aliquotaValor" id="aliquotaValor" formControlName="aliquotaValor"
+                 class="ng-select form-control" (blur)="validarForm()">
+                  <ng-option *ngFor="let val of valoresDeAliquotas" [value]="val.id" [disabled]="val.disabled">{{val.name}}</ng-option>
+                </ng-select>
+                <span class="text-danger" *ngIf="displayMessage.aliquotaValor">
+                  <p [innerHTML]="displayMessage.aliquotaValor"></p>
+                </span>
+              </div>               
+            </div>   
+
+            <div class="col-12 col-lg-12">
+              <div class="form-group">
+                <label>CST Tributação Normal</label>
+                <ng-select [multiple]="false" name="cstTributacaoNormal" id="cstTributacaoNormal" formControlName="cstTributacaoNormal"
+                 class="ng-select form-control" (blur)="validarForm()">
+                  <ng-option [value]="0">00 - Tributada integralmente</ng-option>
+                  <ng-option [value]="10">10 - Tributada com substituição tributário</ng-option>
+                  <ng-option [value]="20">20 - Tributada com redução da base de cálculo</ng-option>
+                  <ng-option [value]="30">30 - Isenta ou não tributada com substituição tributário</ng-option>
+                  <ng-option [value]="41">41 - Não tributada</ng-option>
+                  <ng-option [value]="50">50 - Suspenção</ng-option>
+                  <ng-option [value]="51">51 - Diferimento</ng-option>
+                  <ng-option [value]="60">60 - Substituição tributário</ng-option>
+                  <ng-option [value]="70">70 - Tributada com redução da base de cálculo e substituição tributário</ng-option>
+                  <ng-option [value]="90">90 - Outras</ng-option>
+                </ng-select>          
+                  <span class="text-danger" *ngIf="displayMessage.cstTributacaoNormal">
+                    <p [innerHTML]="displayMessage.cstTributacaoNormal"></p>
+                  </span>
+              </div>
+            </div>   
+
+            <div class="col-12 col-lg-12">
+              <div class="form-group">
+                <label>CST Simples Nacional</label>
+                <ng-select [multiple]="false" name="cstSimplesNacional" id="cstSimplesNacional" formControlName="cstSimplesNacional"
+                 class="ng-select form-control" (blur)="validarForm()">
+                 <ng-option [value]="101">101 - Com permissão de crédito</ng-option>
+                 <ng-option [value]="102">102 - Sem permissão de crédito</ng-option>
+                 <ng-option [value]="103">103 - Isenção por faixa</ng-option>
+                 <ng-option [value]="201">201 - Com permissão de crédito e com substituição tributária</ng-option>
+                 <ng-option [value]="202">202 - Sem permissão de crédito e com substituição tributária</ng-option>
+                 <ng-option [value]="203">203 - Isenção por faixa e com substituição tributária</ng-option>
+                 <ng-option [value]="300">300 - Imune</ng-option>
+                 <ng-option [value]="400">400 - Não tributada</ng-option>
+                 <ng-option [value]="500">500 - Substituição tributária</ng-option>
+                 <ng-option [value]="900">900 - Outros</ng-option>
+                </ng-select>                           
+                <span class="text-danger" *ngIf="displayMessage.cstSimplesNacional">
+                  <p [innerHTML]="displayMessage.cstSimplesNacional"></p>
+                </span>
+              </div>
+            </div>     
+          </div>
+        </div>
+      </div>
+
+    </div>
+    
+
+    <div class="modal-footer">
+
+      <div class="d-flex align-items-center justify-content-between w-100">
+
+        <div class="d-flex align-items-center justify-content-end w-100">
+  
+          <div>
+            <button type="button" class="btn btn-sm btn-danger ml-2" 
+            (click)="activeModal.close('close')">
+              Cancelar
+             </button>
+          </div>
+  
+          <div>
+            <button type="button" class="btn btn-sm btn-success ml-2" (click)="salvar()">
+              Salvar
+            </button>
+          </div>
+        </div>
+
+      </div>
+  
+    </div>
+
+  </form>
+
+</div>

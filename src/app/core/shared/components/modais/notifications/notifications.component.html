@@ -1,0 +1,12 @@
+<div class="modal-body">
+  <div class="notification">
+    <img *ngIf="iconName" [src]="'./assets/images/notifications/' + iconName + '.png'" alt="" class="icon" />
+    <h3 *ngIf="title" class="title">{{title}}</h3>
+    <p *ngIf="message" class="message" [innerHTML]="message"></p>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button *ngFor="let item of options" type="button" class="btn" (click)="action(item.value)"
+    [ngClass]="item.cssClass">{{item.text}}</button>
+</div>

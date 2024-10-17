@@ -1,0 +1,20 @@
+<div class="modal-header">
+  <div class="text-uppercase modal-title text-title fs-18">{{title}}</div>
+</div>
+<div class="modal-body">
+  <div class="mb-3" [innerHTML]="message"></div>
+  <form [formGroup]="form">
+    <div class="form-group">
+      <textarea formControlName="response" rows="2" class="form-control"
+        [ngClass]="{'is-invalid': (form?.get('response').value.length > 280) && form?.get('response').touched}"></textarea>
+      <small class="font-weight-bold" [ngClass]="{'text-danger': form?.get('response').value.length > 280}">
+        {{form?.get('response').value.length}} de 280 caracteres
+      </small>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-sm btn-outline-primary" (click)="activeModal.close('close')">Cancelar</button>
+  <button type="button" class="btn btn-sm btn-primary" [disabled]="form.invalid"
+    (click)="activeModal.close(response.value)">Confirmar</button>
+</div>

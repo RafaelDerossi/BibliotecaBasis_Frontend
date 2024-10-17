@@ -1,0 +1,21 @@
+<div class="modal-header border-0">
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.close('close')">
+    <i class="icon-times-circle"></i>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="d-flex align-items-center justify-content-center mb-4">
+    <img [src]="pathImage" src="">
+  </div>
+  <div class="info">
+    <h4 class="title">
+      {{ title }}
+    </h4>
+    <p class="text" [innerHTML]="message"></p>
+  </div>
+
+</div>
+<div class="modal-footer d-flex align-items-center justify-content-center border-0">
+  <button *ngFor="let item of options" type="button" class="btn" (click)="activeModal.close(item.value)"
+    [ngClass]="item.cssClass">{{item.text}}</button>
+</div>

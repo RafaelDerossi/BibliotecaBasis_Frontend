@@ -1,0 +1,26 @@
+pre {
+  .debug {
+    position: fixed;
+    top: 32px;
+    width: 25%;
+    height: 50%;
+    opacity: 0.9;
+    border-radius: 8px;
+    padding: 16px;
+    background: $grayLight;
+    border: solid 1px $grayDark;
+    z-index: 9999;
+    &:hover {
+      // opacity: 0.1;
+    }
+    &.left {
+      left: 32px;
+    }
+    &.right {
+      right: 32px;
+    }
+    &:focus {
+      opacity: 1;
+    }
+  }
+}
