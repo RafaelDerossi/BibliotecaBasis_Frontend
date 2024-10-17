@@ -63,6 +63,30 @@
                     </div>
                   </div>
 
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">          
+                      <label>Edição <i class="icon-companies"></i></label>
+                      <div class="input">             
+                        <input type="text" class="form-control" autofocus id="edicao" placeholder="" formControlName="edicao">            
+                      </div>    
+                      <span class="text-danger" *ngIf="displayMessage.edicao">
+                        <p [innerHTML]="displayMessage.edicao"></p>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">          
+                      <label>Ano Publicação <i class="icon-companies"></i></label>
+                      <div class="input">             
+                        <input type="text" class="form-control" autofocus id="anoPublicacao" placeholder="" formControlName="anoPublicacao">            
+                      </div>    
+                      <span class="text-danger" *ngIf="displayMessage.anoPublicacao">
+                        <p [innerHTML]="displayMessage.anoPublicacao"></p>
+                      </span>
+                    </div>
+                  </div>
+
                 </div>              
 
 

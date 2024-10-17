@@ -51,14 +51,22 @@ export class NovoEditarLivroComponent extends FormBaseComponent implements OnIni
 
     this.validationMessages = {
       titulo: {
-        required: 'Informe o Título do livro',
+        required: 'Informe o título do livro',
         minlength: 'Título deve ter entre 1 e 40 caracteres',
         maxlength: 'Título deve ter entre 1 e 40 caracteres'
       },
       editora: {
-        required: 'Informe Editora do livro',
+        required: 'Informe editora do livro',
         minlength: 'Editora deve ter entre 1 e 40 caracteres',
         maxlength: 'Editora deve ter entre 1 e 40 caracteres'
+      },
+      edicao: {
+        required: 'Informe a edição do livro'        
+      },
+      anoPublicacao: {
+        required: 'Informe o ano de publicação do livro',
+        minlength: 'Ano de publicação deve ter 4 caracteres',
+        maxlength: 'Ano de publicação deve ter 4 caracteres'        
       },
     };
 
@@ -71,6 +79,8 @@ export class NovoEditarLivroComponent extends FormBaseComponent implements OnIni
     this.form = this.fb.group({
       titulo: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(40)]],
       editora: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(40)]],
+      edicao: ['0', Validators.required],
+      anoPublicacao: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
       assuntos: new FormArray([]),       
     });
     
