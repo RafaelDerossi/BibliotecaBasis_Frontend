@@ -8,8 +8,8 @@ import { LivroService } from 'src/app/core/services/livros/livro.service';
 import { AssuntoService } from 'src/app/core/services/assuntos/assunto.service';
 import { Assunto } from 'src/app/core/interfaces/assunto';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { map } from 'lodash';
-
+import { AutorService } from 'src/app/core/services/autores/autor.service';
+import { Autor } from 'src/app/core/interfaces/autor';
 
 @Component({
   selector: 'app-novo-editar-livro',
@@ -30,6 +30,7 @@ export class NovoEditarLivroComponent extends FormBaseComponent implements OnIni
   livro: Livro;
   livroNovo: NovoLivro;
   assuntos: Assunto[]= [];
+  autores: Autor[]= [];
   response: any;
   modalbackgroundStorageSelected: string;
   backgroundStorageSelected: string = "background-black";
@@ -37,11 +38,13 @@ export class NovoEditarLivroComponent extends FormBaseComponent implements OnIni
   disable3: boolean = true;
 
   assuntosFormArray: FormArray = new FormArray([]); 
+  autoresFormArray: FormArray = new FormArray([]); 
 
   constructor(
     private fb: FormBuilder,
     private livroService: LivroService,    
     private assuntoService: AssuntoService,    
+    private autorService: AutorService,    
     private app: AppService,    
     public activeModal: NgbActiveModal,
     private renderer: Renderer2,
@@ -61,12 +64,15 @@ export class NovoEditarLivroComponent extends FormBaseComponent implements OnIni
         maxlength: 'Editora deve ter entre 1 e 40 caracteres'
       },
       edicao: {
-        required: 'Informe a edição do livro'        
+        required: 'Informe a edição do livro',
+        maxlength: 'Edição deve ter até 9 caracteres',
+        pattern: 'Informe apenas números!'                  
       },
       anoPublicacao: {
         required: 'Informe o ano de publicação do livro',
         minlength: 'Ano de publicação deve ter 4 caracteres',
-        maxlength: 'Ano de publicação deve ter 4 caracteres'        
+        maxlength: 'Ano de publicação deve ter 4 caracteres',
+        pattern: 'Informe apenas números!'          
       },
     };
 
@@ -79,9 +85,10 @@ export class NovoEditarLivroComponent extends FormBaseComponent implements OnIni
     this.form = this.fb.group({
       titulo: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(40)]],
       editora: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(40)]],
-      edicao: ['0', Validators.required],
+      edicao: ['0', [Validators.required, Validators.maxLength(9)]],
       anoPublicacao: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
       assuntos: new FormArray([]),       
+      autores: new FormArray([]),       
     });
     
     this.carregarAssuntos();
@@ -95,6 +102,8 @@ export class NovoEditarLivroComponent extends FormBaseComponent implements OnIni
         id: this.livro.id,
         titulo: this.livro.titulo,
         editora: this.livro.editora,
+        edicao: this.livro.edicao,
+        anoPublicacao: this.livro.anoPublicacao,
       });
     }    
     
@@ -117,7 +126,19 @@ export class NovoEditarLivroComponent extends FormBaseComponent implements OnIni
       });
   }
   processarAssuntosCarregadosComSucesso(){    
-    //this.carregarAutores();           
+    this.carregarAutores();    
+  }
+
+  carregarAutores()
+  {
+    this.autorService.obterTodos()
+      .subscribe({
+        next:  (s) => this.autores = s,
+        error: (e) => this.processarFalhaEmCarregarLista(e),
+        complete: () => this.processarAutoresCarregadosComSucesso()
+      });
+  }
+  processarAutoresCarregadosComSucesso(){  
     this.loading = false;
   }
 
@@ -128,6 +149,7 @@ export class NovoEditarLivroComponent extends FormBaseComponent implements OnIni
           this.errorMessage.push(item);
         });    
   }
+
 
 
   save() {    
@@ -142,6 +164,10 @@ export class NovoEditarLivroComponent extends FormBaseComponent implements OnIni
         return a.assuntoId;
       });
       
+      this.livroNovo.autores = this.autoresFormArray.value.map(function(a) {
+        return a.autorId;
+      });
+
       this.form.disable();
       this.errorMessage = [];
 
@@ -242,30 +268,20 @@ export class NovoEditarLivroComponent extends FormBaseComponent implements OnIni
   }
 
   validarAbaInfoBasica():boolean{
-    if (!this.form.get("gtin").valid || 
-        !this.form.get("genuino").valid){      
+    if (!this.form.get("titulo").valid || 
+        !this.form.get("editora").valid || 
+        !this.form.get("edicao").valid || 
+        !this.form.get("anoPublicacao").valid){      
       return false;
     }     
     return true;
   }
 
-  validarAbaAssunto():boolean{
-    if (!this.form.get("fabricaId").valid ||
-        !this.form.get("cif").valid){      
-      
-      this.form.get("fabricaId").markAsTouched();
-      this.form.get("cif").markAsTouched();
-      return false;
-    }    
+  validarAbaAssunto():boolean{    
     return true;
   }
 
-  validarAbaAutor():boolean{    
-    if (!this.form.get("subgrupoId").valid){
-      this.form.get("grupoId").markAsTouched();
-      this.form.get("subgrupoId").markAsTouched();
-      return false;
-    }
+  validarAbaAutor():boolean{        
     return true;
   }
 
@@ -291,6 +307,29 @@ export class NovoEditarLivroComponent extends FormBaseComponent implements OnIni
 
     this.form.get('assuntos')['controls'][event.currentIndex].get('ordem').setValue(event.currentIndex);
     this.form.get('assuntos')['controls'][event.previousIndex].get('ordem').setValue(event.previousIndex);
+  }
+
+
+  adicionarAutorNaLista() {
+    this.autoresFormArray = this.form.get('autores') as FormArray;    
+    this.autoresFormArray.push(
+      new FormGroup({
+        autorId: new FormControl("", Validators.required),
+      })
+    )
+  }
+
+  removerAutorDaLista(index: number) {
+    this.autoresFormArray = this.form.get("autores") as FormArray;
+    this.autoresFormArray.removeAt(index);
+  }
+
+  dropAutor(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.form.get('autores')['controls'], event.previousIndex, event.currentIndex);
+    moveItemInArray(this.form.get('autores').value, event.previousIndex, event.currentIndex);
+
+    this.form.get('autores')['controls'][event.currentIndex].get('ordem').setValue(event.currentIndex);
+    this.form.get('autores')['controls'][event.previousIndex].get('ordem').setValue(event.previousIndex);
   }
 
 }
