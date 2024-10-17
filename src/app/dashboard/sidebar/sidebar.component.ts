@@ -18,7 +18,7 @@ export class SidebarComponent implements OnInit {
   appVersion = environment.version;
   loading: boolean = false;
   liberarBotao: boolean = true;
-  backgroundStorageSelected: string = 'background-branco';  
+  backgroundStorageSelected: string = 'background-black';  
   menuFixo: boolean = false;
   isMenuFixo: boolean = false;
   menu: Menu[] = [];

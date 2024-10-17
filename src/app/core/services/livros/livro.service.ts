@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Livro } from '../../interfaces/livro';
+import { Livro, NovoLivro } from '../../interfaces/livro';
 import { BaseService } from '../base.service';
 
 @Injectable({
@@ -21,7 +21,7 @@ export class LivroService extends BaseService{
     return response;
   }
 
-  adicionar(form: Livro): Observable<any> {
+  adicionar(form: NovoLivro): Observable<any> {
     let response = this.http
         .post(`${this.UrlApiPrincipal}Livro`, form)
         .pipe(
@@ -31,7 +31,7 @@ export class LivroService extends BaseService{
     return response;
   }
 
-  atualizar(form: Livro): Observable<any> {
+  atualizar(form: NovoLivro): Observable<any> {
     let response = this.http
         .put(`${this.UrlApiPrincipal}Livro`, form)
         .pipe(

@@ -1,10 +1,14 @@
 import { Component, ElementRef, OnInit, ViewChildren, Renderer2 } from '@angular/core';
-import { FormBuilder, FormControl, FormControlName, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormControlName, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbNavChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import { AppService } from 'src/app/core/services/global/app.service';
 import { FormBaseComponent } from 'src/app/core/shared/components/form-base.component';
-import { Livro } from 'src/app/core/interfaces/livro';
+import { Livro, NovoLivro } from 'src/app/core/interfaces/livro';
 import { LivroService } from 'src/app/core/services/livros/livro.service';
+import { AssuntoService } from 'src/app/core/services/assuntos/assunto.service';
+import { Assunto } from 'src/app/core/interfaces/assunto';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { map } from 'lodash';
 
 
 @Component({
@@ -24,15 +28,20 @@ export class NovoEditarLivroComponent extends FormBaseComponent implements OnIni
   loading: boolean = false;  
   errorMessage: string[] = [];      
   livro: Livro;
+  livroNovo: NovoLivro;
+  assuntos: Assunto[]= [];
   response: any;
   modalbackgroundStorageSelected: string;
-  backgroundStorageSelected: string;
+  backgroundStorageSelected: string = "background-black";
   disable2: boolean = true;
   disable3: boolean = true;
+
+  assuntosFormArray: FormArray = new FormArray([]); 
 
   constructor(
     private fb: FormBuilder,
     private livroService: LivroService,    
+    private assuntoService: AssuntoService,    
     private app: AppService,    
     public activeModal: NgbActiveModal,
     private renderer: Renderer2,
@@ -46,6 +55,11 @@ export class NovoEditarLivroComponent extends FormBaseComponent implements OnIni
         minlength: 'Título deve ter entre 1 e 40 caracteres',
         maxlength: 'Título deve ter entre 1 e 40 caracteres'
       },
+      editora: {
+        required: 'Informe Editora do livro',
+        minlength: 'Editora deve ter entre 1 e 40 caracteres',
+        maxlength: 'Editora deve ter entre 1 e 40 caracteres'
+      },
     };
 
     super.configurarMensagensValidacaoBase(this.validationMessages);    
@@ -55,9 +69,13 @@ export class NovoEditarLivroComponent extends FormBaseComponent implements OnIni
     this.modalbackgroundStorageSelected = 'modal-' + this.backgroundStorageSelected;    
 
     this.form = this.fb.group({
-      titulo: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(40)]],      
+      titulo: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(40)]],
+      editora: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(40)]],
+      assuntos: new FormArray([]),       
     });
     
+    this.carregarAssuntos();
+
     this.action = this.actionRequested;
     if (this.action != 'Novo Livro'){
       this.disable2 = false;
@@ -66,6 +84,7 @@ export class NovoEditarLivroComponent extends FormBaseComponent implements OnIni
       this.form.patchValue({      
         id: this.livro.id,
         titulo: this.livro.titulo,
+        editora: this.livro.editora,
       });
     }    
     
@@ -75,6 +94,31 @@ export class NovoEditarLivroComponent extends FormBaseComponent implements OnIni
     super.configurarValidacaoFormularioBase(this.formInputElements, this.form);   
   }
   
+  carregarAssuntos()
+  {    
+    this.errorMessage = [];
+    this.loading = true;
+
+    this.assuntoService.obterTodos()
+      .subscribe({
+        next:  (s) => this.assuntos = s,
+        error: (e) => this.processarFalhaEmCarregarLista(e),
+        complete: () => this.processarAssuntosCarregadosComSucesso()
+      });
+  }
+  processarAssuntosCarregadosComSucesso(){    
+    //this.carregarAutores();           
+    this.loading = false;
+  }
+
+  processarFalhaEmCarregarLista(fail: any){
+    this.loading = false;    
+    const { errors } = fail.error;        
+    errors.map((item) => {
+          this.errorMessage.push(item);
+        });    
+  }
+
 
   save() {    
 
@@ -82,14 +126,18 @@ export class NovoEditarLivroComponent extends FormBaseComponent implements OnIni
 
       this.loading = true;  
 
-      this.livro = Object.assign({}, this.livro, this.form.value);    
+      this.livroNovo = Object.assign({}, this.livroNovo, this.form.value);    
 
+      this.livroNovo.assuntos = this.assuntosFormArray.value.map(function(a) {
+        return a.assuntoId;
+      });
+      
       this.form.disable();
       this.errorMessage = [];
 
       if (this.action == 'Editar Livro'){
       
-        this.livroService.atualizar(this.livro)
+        this.livroService.atualizar(this.livroNovo)
          .subscribe({
            next:  (s) => this.response = s,
            error: (e) => this.processarFalha(e),
@@ -99,7 +147,7 @@ export class NovoEditarLivroComponent extends FormBaseComponent implements OnIni
         return;
       }
 
-      this.livroService.adicionar(this.livro)
+      this.livroService.adicionar(this.livroNovo)
       .subscribe({
         next:  (s) => this.response = s,
         error: (e) => this.processarFalha(e),
@@ -176,4 +224,63 @@ export class NovoEditarLivroComponent extends FormBaseComponent implements OnIni
   excluirLivro() {    
     this.activeModal.close('del')
   }
+
+
+
+  validarForm(){
+    super.validarFormulario(this.form);
+  }
+
+  validarAbaInfoBasica():boolean{
+    if (!this.form.get("gtin").valid || 
+        !this.form.get("genuino").valid){      
+      return false;
+    }     
+    return true;
+  }
+
+  validarAbaAssunto():boolean{
+    if (!this.form.get("fabricaId").valid ||
+        !this.form.get("cif").valid){      
+      
+      this.form.get("fabricaId").markAsTouched();
+      this.form.get("cif").markAsTouched();
+      return false;
+    }    
+    return true;
+  }
+
+  validarAbaAutor():boolean{    
+    if (!this.form.get("subgrupoId").valid){
+      this.form.get("grupoId").markAsTouched();
+      this.form.get("subgrupoId").markAsTouched();
+      return false;
+    }
+    return true;
+  }
+
+
+
+  adicionarAssuntoNaLista() {
+    this.assuntosFormArray = this.form.get('assuntos') as FormArray;    
+    this.assuntosFormArray.push(
+      new FormGroup({
+        assuntoId: new FormControl("", Validators.required),
+      })
+    )
+  }
+
+  removerAssuntoDaLista(index: number) {
+    this.assuntosFormArray = this.form.get("assuntos") as FormArray;
+    this.assuntosFormArray.removeAt(index);
+  }
+
+  dropAssunto(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.form.get('assuntos')['controls'], event.previousIndex, event.currentIndex);
+    moveItemInArray(this.form.get('assuntos').value, event.previousIndex, event.currentIndex);
+
+    this.form.get('assuntos')['controls'][event.currentIndex].get('ordem').setValue(event.currentIndex);
+    this.form.get('assuntos')['controls'][event.previousIndex].get('ordem').setValue(event.previousIndex);
+  }
+
 }

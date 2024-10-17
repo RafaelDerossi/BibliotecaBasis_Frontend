@@ -15,3 +15,12 @@ export interface Livro {
   autores: Autor[];
   assuntos: Assunto[];
 }
+
+export interface NovoLivro {  
+  titulo: string;
+  editora: string;  
+  edicao: string;
+  anoPublicacao: string;  
+  autores: string[];
+  assuntos: string[];
+}
