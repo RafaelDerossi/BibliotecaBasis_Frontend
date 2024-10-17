@@ -3,7 +3,7 @@
     <div class="col-12">
       <div class="rounded w-100 p-3 ml-4">
         <div>
-          <h3 class="text-title">Lojas</h3>
+          <h3 class="text-title">Autores</h3>
         </div>          
       </div>
     </div>
@@ -12,15 +12,15 @@
   <div class="row d-md-flex">
     <div class="col-9">
       <div class="rounded w-100 p-3 align-items-left ml-4">
-        <input type="text" class="form-control" placeholder="Nome ou CNPJ ou IE ou e-mail"
-            (keyup)="filtrarLojas($event.target.value)" />
+        <input type="text" class="form-control" placeholder="Autor"
+            (keyup)="filtrarAutores($event.target.value)" />
       </div>
     </div>
     <div class="col-3">
       <div class="rounded w-100 p-1 align-items-rigth">
-        <button class="btn btn-sm btn-add mr-1 my-2 my-lg-0" (click)="novaLoja()">
+        <button class="btn btn-sm btn-add mr-1 my-2 my-lg-0" (click)="novoAutor()">
            <i class="icon-plus-circle mr-1"></i>
-              Nova Loja
+              Novo Autor
         </button>
       </div>
     </div>
@@ -44,55 +44,42 @@
               </div>
 
 
-                <div *ngIf="lojas?.length > 0">
+                <div *ngIf="autores?.length > 0">
                   <div class="align-items-center d-flex flex-column text-center text-title"
-                    *ngIf="lojasCopy?.length === 0">
+                    *ngIf="assuntosCopy?.length === 0">
                     <img src="assets/mascote/gato-preto.png" alt="" class="img-fluid w-20 w-md-10" />
                     <div class="alert alert-warning">
-                      <strong>Nenhuma loja encontrada com o termo informado</strong>
+                      <strong>Nenhum autor encontrado com o termo informado</strong>
                     </div>                    
                   </div>
 
-                  <div class="table-responsive" *ngIf="lojasCopy?.length > 0">
+                  <div class="table-responsive" *ngIf="autoresCopy?.length > 0">
           
                     <table class="table border-top-0">
                       <thead>
                         <tr>
-                          <th scope="col">Foto</th>                          
-                          <th scope="col">Código</th>
-                          <th scope="col">Nome Fantasia</th>
-                          <th scope="col">CNPJ</th>                          
-                          <th scope="col">Regime Tributário</th>
-                          <th scope="col">Situação</th>                          
+                          <th scope="col">Nome</th>                          
                           <th scope="col" class="text-center">Ação</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr
-                          *ngFor="let loja of lojasCopy | slice: (currentPage-1) * itemsPerPage : (currentPage-1) * itemsPerPage + itemsPerPage">
-                          <td>
-                            <div class="user-img" [style]="setAvatar(loja?.fotoURl)" (click)="alterarFotoDaLoja(loja)"></div>
-                          </td>
-                          <td>{{loja?.codigo}}</td>
-                          <td>{{loja?.nomeFantasia | titlecase}}</td>                          
-                          <td>{{loja?.cnpj | mask: '00.000.000/0000-00'}}</td>
-                          <td>{{loja?.regimeTributarioDescricao}}</td>
-                          <td *ngIf="loja?.ativa == true">Ativa</td> 
-                          <td *ngIf="loja?.ativa == false">Desativada</td>                          
+                          *ngFor="let item of autoresCopy | slice: (currentPage-1) * itemsPerPage : (currentPage-1) * itemsPerPage + itemsPerPage">                                                    
+                          <td>{{item?.nome}}</td>                          
                           <td align="center">
-                            <button type="button" class="btn btn-sm btn-primary mb-1" (click)="detalhesLoja(loja)">
+                            <button type="button" class="btn btn-sm btn-primary mb-1" (click)="detalhesAutor(item)">
                               <span *ngIf="!loading"><i class="icon-eye"></i></span>
                               <span *ngIf="loading"><i class="spinner-border spinner-border-sm mr-2"></i>
                                 Carregando...
                               </span>
                             </button>
-                            <button *ngIf="somenteConsulta == false" type="button" class="btn btn-sm btn-primary ml-1 mb-1" (click)="editarLoja(loja)">
+                            <button type="button" class="btn btn-sm btn-primary ml-1 mb-1" (click)="editarAutor(item)">
                               <span *ngIf="!loading"><i class="icon-pencil"></i></span>
                               <span *ngIf="loading"><i class="spinner-border spinner-border-sm mr-2"></i>
                                 Carregando...
                               </span>
                             </button>
-                            <button *ngIf="somenteConsulta == false" type="button" class="btn btn-sm btn-danger ml-1 mb-1" (click)="excluirLoja(loja)">
+                            <button type="button" class="btn btn-sm btn-danger ml-1 mb-1" (click)="excluirAutor(item)">
                               <span *ngIf="!loading">
                                 <i class="icon-trash"></i></span><span *ngIf="loading">
                                 <i class="spinner-border spinner-border-sm mr-2"></i>

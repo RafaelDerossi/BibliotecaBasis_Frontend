@@ -1,0 +1,173 @@
+<div [class]="modalbackgroundStorageSelected">
+  
+  <div class="modal-header">
+    
+    <div class="text-uppercase modal-title text-title fs-18 ml-2">{{action}}</div>   
+
+    <button type="button" class="close text-danger" aria-label="Close" (click)="activeModal.close('close')">
+      <i class="icon-times-circle"></i>
+    </button>
+
+  </div>  
+  
+  
+
+  <form [formGroup]="form" class="form p-3">
+    <div class="container-fluid">
+    
+      <div class="alert border-danger text-danger font-weight-bold d-flex align-items-center my-2 fs-14"
+      *ngIf="errorMessage.length > 0">
+        <div class="mr-3">
+          <i class="icon-alert fs-24"></i>
+        </div>
+        <div>
+          <ng-container *ngFor="let error of errorMessage">
+            {{error}}
+          </ng-container>
+        </div>
+      </div>      
+
+      <div class="row">
+        <div class="col-12">
+          
+          <ul ngbNav #nav="ngbNav" [(activeId)]="activeTabId" [destroyOnHide]="false" (navChange)="onNavChange($event)" class="nav-tabs mt-1">
+            
+            <li [ngbNavItem]="1">
+              <a ngbNavLink><i class="icon-doc-empty"></i> Informações básicas</a>
+              <ng-template ngbNavContent let-active>
+  
+                <div class="row border rounded p-3 mb-3" *ngIf="action !== 'Detalhes do Assunto'">
+      
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">          
+                      <label>Descrição <i class="icon-companies"></i></label>
+                      <div class="input">             
+                        <input type="text" class="form-control" autofocus id="descricao" placeholder="Ex: Tecnologia" formControlName="descricao">            
+                      </div>    
+                      <span class="text-danger" *ngIf="displayMessage.descricao">
+                        <p [innerHTML]="displayMessage.descricao"></p>
+                      </span>
+                    </div>
+                  </div>
+
+                </div>              
+
+
+                <div class="row border rounded p-3 mb-3" *ngIf="action == 'Detalhes do Assunto'">
+      
+                  <div class="col-12 col-lg-6">
+                    <div class="form-group">          
+                      <label>Descrição <i class="icon-companies"></i></label>
+                      <div class="text-title">             
+                        <h4>{{assunto.descricao}}</h4>
+                      </div>                     
+                    </div>
+                  </div>
+                </div>   
+
+
+              </ng-template>
+            </li>
+  
+            <li [ngbNavItem]="2" [disabled]="disable2">
+              <a ngbNavLink><i class="icon-phone"></i> Contatos</a>
+              <ng-template ngbNavContent let-active>
+                
+                <div class="row border rounded p-3 mb-3" *ngIf="action != 'Detalhes do Assunto'">
+                                
+                </div>    
+
+
+                <div class="row border rounded p-3 mb-3" *ngIf="action == 'Detalhes do Assunto'">
+                        
+                </div>   
+              </ng-template>
+            </li>  
+            
+            <li [ngbNavItem]="3" [disabled]="disable3">
+              <a ngbNavLink><i class="icon-envelope"></i> Endereço</a>
+              <ng-template ngbNavContent let-active>
+                
+                <div class="row border rounded p-3 mb-3" *ngIf="action !== 'Detalhes do Assunto'">              
+                         
+          
+                </div>    
+
+
+
+                <div class="row border rounded p-3 mb-3" *ngIf="action == 'Detalhes do Assunto'">              
+                         
+
+                </div>  
+
+              </ng-template>
+            </li>  
+
+            <li class="d-flex align-items-center justify-content-end w-50" *ngIf="action == 'Detalhes do Assunto'">              
+              <div class="d-flex align-items-center justify-content-end">  
+      
+                <div>
+                  <button type="button" class="btn btn-sm btn-add ml-2" (click)="novoAssunto()">
+                    <span><i class="icon-plus"></i></span>
+                   </button>
+                </div>
+                <div>
+                  <button type="button" class="btn btn-sm btn-primary ml-2" (click)="editarAssunto()">
+                    <span><i class="icon-pencil"></i></span>
+                  </button>          
+                </div>  
+                <div>
+                  <button type="button" class="btn btn-sm btn-danger ml-2" (click)="excluirAssunto()">
+                    <span><i class="icon-trash"></i></span>
+                  </button>            
+                </div>
+          
+              </div>
+            </li>
+          </ul>
+  
+          <div [ngbNavOutlet]="nav" class="mt-2"></div>          
+
+        </div>
+      </div>
+
+    </div>
+    
+
+    <div class="modal-footer">
+
+      <div class="d-flex align-items-center justify-content-between w-100">
+
+        <div class="d-flex align-items-center justify-content-end w-100">
+  
+          <div>
+            <button type="button" class="btn btn-sm btn-danger ml-2" (click)="activeModal.close('close')" *ngIf="action !== 'Detalhes do Assunto'">
+              Cancelar
+             </button>
+          </div>
+          <div>
+            <button class="btn btn-sm btn-primary ml-2" (click)="voltarStep()" *ngIf="activeTabId != 1">
+              Voltar
+            </button>            
+          </div>
+          <div>            
+            <button class="btn btn-sm btn-primary ml-2" (click)="proximoStep()" *ngIf="activeTabId != 3">
+              Próximo
+            </button>
+          </div>
+  
+          <div>
+            <button type="button" class="btn btn-sm btn-success ml-2" (click)="save()" 
+              *ngIf="(activeTabId == 3 && action !== 'Detalhes do Assunto') || action == 'Editar Assunto'">
+              Salvar
+            </button>
+          </div>
+        </div>
+
+      </div>
+  
+    </div>
+
+  </form>
+
+</div>

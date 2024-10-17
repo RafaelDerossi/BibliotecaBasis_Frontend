@@ -52,15 +52,22 @@ export class SidebarComponent implements OnInit {
         items: []
       },
       {
-        text: 'Produtos',
+        text: 'Livros',
         path: 'gestao-produtos/produtos',
         icon: 'icon-tag',
         exact: true,
         active: true,
       },      
       {
-        text: 'Lojas',
-        path: 'loja',
+        text: 'Assuntos',
+        path: 'assunto',
+        icon: 'icon-companies',
+        exact: true,        
+      }
+      ,      
+      {
+        text: 'Autores',
+        path: 'autor',
         icon: 'icon-companies',
         exact: true,        
       }

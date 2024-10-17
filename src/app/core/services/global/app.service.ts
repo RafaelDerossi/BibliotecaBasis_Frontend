@@ -8,12 +8,10 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AlertComponent } from '../../shared/components/modais/alert/alert.component';
 import { ConfirmComponent } from '../../shared/components/modais/confirm/confirm.component';
 import { PromptComponent } from '../../shared/components/modais/prompt/prompt.component';
-import { SwPush } from '@angular/service-worker';
 import { ModalAlertExcluirComponent } from '../../shared/components/modais/modal-alert-excluir/modal-alert-excluir.component';
 import { NotificationsComponent } from '../../shared/components/modais/notifications/notifications.component';
 import { ModalConfirmExcluirProps, NotificationModalProps, ToastConfigs } from '../../interfaces/global';
 import { ModalConfirmExcluirComponent } from '../../shared/components/modais/modal-confirm-excluir/modal-confirm-excluir.component';
-import { DomSanitizer } from '@angular/platform-browser';
 import axios from 'axios';
 import { Observable } from 'rxjs';
 import html2canvas from 'html2canvas';
@@ -26,8 +24,6 @@ import jsPDF from 'jspdf';
 })
 export class AppService {
 
-  readonly VAPID_PUBLIC_KEY = '<VAPID-PUBLIC-KEY-HERE>';
-  apiCep = environment.viacep;
   componentImpressao: any;
   public numberOfFiles: number; //dropzone count files
   loading$: Observable<boolean>;
@@ -132,66 +128,7 @@ export class AppService {
 
   normalizeText(text: string): string {
     return text.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
-  }
-
-  
-
-  viaCep(cep: string): Promise<ViaCep> {
-    return this.http.get<ViaCep>(`${this.apiCep}${cep}/json`).toPromise();
-  }
-
-  retornaGeoLocation(endereco: string): Promise<any> {
-    return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURI(endereco)}&key=${environment.mapApiKey}`);
   }  
-
-  converterDocumento(doc: string): string {
-    const documento: string = doc;
-    if (documento.length == 11) {
-      return documento.replace(/(\d{3})?(\d{3})?(\d{3})?(\d{2})/, "$1.$2.$3-$4");
-    } else if (documento.length == 14) {
-      return documento.replace(/(\d{2})?(\d{3})?(\d{3})?(\d{4})?(\d{2})/, "$1.$2.$3/$4-$5");
-    }
-  }
-
-  convertDiasDaSemana(item: string): string {
-    let dia: string = '';
-    switch (item) {
-      case 'Monday':
-        dia = 'Segunda';
-        break;
-      case 'Tuesday':
-        dia = 'Terça'
-        break;
-      case 'Wednesday':
-        dia = 'Quarta';
-        break;
-      case 'Thursday':
-        dia = 'Quinta';
-        break;
-      case 'Friday':
-        dia = 'Sexta';
-        break;
-      case 'Saturday':
-        dia = 'Sábado';
-        break;
-      case 'Sunday':
-        dia = 'Domingo';
-        break;
-      default:
-        dia = '';
-        break;
-    }
-
-    return dia;
-  }
-
-  validarSenha(senha: string): boolean {
-    const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-    if (!regex.test(senha)) {
-      return false;
-    }
-    return true;
-  }
 
   formatDateTime(date: Date, locale = 'pt-BR'): string {
     return new Intl.DateTimeFormat(locale).format(new Date(date));

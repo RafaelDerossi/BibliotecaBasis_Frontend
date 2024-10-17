@@ -17,8 +17,12 @@ const routes: Routes = [
         loadChildren: () => import('./home/home.module').then(module => module.HomeModule)
       },
       {
-        path: 'loja',
-        loadChildren: () => import('./lojas/lojas.module').then(module => module.LojaModule),
+        path: 'assunto',
+        loadChildren: () => import('./assuntos/assunto.module').then(module => module.AssuntoModule),
+      },
+      {
+        path: 'autor',
+        loadChildren: () => import('./autores/autor.module').then(module => module.AutorModule),
       },
       {
         path: 'gestao-produtos',

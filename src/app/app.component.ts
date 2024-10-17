@@ -79,7 +79,7 @@ export class AppComponent implements OnInit {
     else{      
       let classeAtual = document.body.classList.value;
       document.body.classList.remove(classeAtual);
-      document.body.classList.add('background-steel-blue');
+      document.body.classList.add('modal-background-black');
     }
   }
 

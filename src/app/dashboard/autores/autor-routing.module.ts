@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LojasComponent } from './lojas.component';
+import { AutorComponent } from './autor.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: LojasComponent,    
-    data: [{ claim: { nome: 'TipoUsuario', valor: '4'}}]
+    component: AutorComponent
   }
 ];
 
@@ -14,4 +13,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class LojasRoutingModule { }
+export class AutorRoutingModule { }

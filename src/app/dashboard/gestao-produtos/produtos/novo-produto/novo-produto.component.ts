@@ -4,7 +4,7 @@ import { NgbActiveModal, NgbNavChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import { Aliquota } from 'src/app/core/interfaces/aliquota';
 import { Fabrica } from 'src/app/core/interfaces/fabrica';
 import { Grupo } from 'src/app/core/interfaces/grupo';
-import { Loja } from 'src/app/core/interfaces/loja';
+import { Assunto } from 'src/app/core/interfaces/assunto';
 import { Montadora } from 'src/app/core/interfaces/montadora';
 import { NovoProduto } from 'src/app/core/interfaces/produto';
 import { Subgrupo } from 'src/app/core/interfaces/subgrupo';
@@ -16,7 +16,7 @@ import { MontadoraService } from 'src/app/core/services/gestao-produtos/montador
 import { ProdutoService } from 'src/app/core/services/gestao-produtos/produto.service';
 import { UnidadeService } from 'src/app/core/services/gestao-produtos/unidade.service';
 import { AppService } from 'src/app/core/services/global/app.service';
-import { LojaService } from 'src/app/core/services/lojas/loja.service';
+import { AssuntoService } from 'src/app/core/services/assuntos/assunto.service';
 import { FormBaseComponent } from 'src/app/core/shared/components/form-base.component';
 import { DigitOnlyDirective } from 'src/app/core/shared/directive/digit-only.directive';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -46,7 +46,7 @@ export class NovoProdutoComponent extends FormBaseComponent implements OnInit {
   subgrupos: Subgrupo[]= [];
   fabricas: Fabrica[]= [];
   unidades: Unidade[]= [];
-  lojas: Loja[]= [];
+  lojas: Assunto[]= [];
   aliquotas: Aliquota[]= [];
   montadoras: Montadora[]= [];
   grades: Grade[]= [];
@@ -125,7 +125,7 @@ valoresDeTipoDeCalculodoPisECofins = [
     private grupoService: GrupoService,
     private fabricaService: FabricaService,
     private unidadeService: UnidadeService,
-    private lojaService: LojaService,
+    private lojaService: AssuntoService,
     private aliquotaService: AliquotaService,
     private montadoraService: MontadoraService,    
     private app: AppService,    
@@ -329,7 +329,7 @@ valoresDeTipoDeCalculodoPisECofins = [
 
   carregarLojas()
   {    
-    this.lojaService.obterPorOrganizacao(this.organizacaoDoLocalStorage.id)
+    this.lojaService.obterTodos()
       .subscribe({
         next:  (s) => this.lojas = s,
         error: (e) => this.processarFalhaEmCarregarLista(e),
@@ -446,7 +446,7 @@ valoresDeTipoDeCalculodoPisECofins = [
       this.estoques.push(
         new FormGroup({                  
           lojaId: new FormControl(loja.id, Validators.required),          
-          lojaNomeFantasia: new FormControl(loja.nomeFantasia),
+          lojaNomeFantasia: new FormControl(loja.descricao),
           emEstoque: new FormControl('0', Validators.required),
           estoqueMinimo: new FormControl('1', Validators.required),
           estoqueMaximo: new FormControl('2', Validators.required),

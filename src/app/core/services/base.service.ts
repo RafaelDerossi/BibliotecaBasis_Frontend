@@ -4,8 +4,7 @@ import { environment } from 'src/environments/environment';
 import { LocalStorageUtils } from '../shared/utils/localstorage';
 
 export abstract class BaseService {
-
-    protected UrlApiIdentidade: string = environment.api.identidade;
+    
     protected UrlApiPrincipal: string = environment.api.principal;
     public LocalStorage = new LocalStorageUtils();    
 

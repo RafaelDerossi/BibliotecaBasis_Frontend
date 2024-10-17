@@ -4,20 +4,14 @@
 
 import { controlVersion } from './version';
 
-const host = 'https://localhost:44373/';
-//const host = 'http://mapdinformatica-002-site3.itempurl.com/';
+const host = 'https://localhost:44395/';
 
 export const environment = {
   production: false,
   api: {
-    identidade: 'https://localhost:44396/api/identidade',
-   // identidade: 'http://mapdinformatica-002-site4.itempurl.com/api/identidade',
-    principal: host + 'api/',
-  },
-  host,
-  singalrUrl: host + 'MensagemEmTempoRealHub',
-  mapApiKey: 'AIzaSyC44M_lza2UuFuO3Tof4EGW_jh4c1aBzBc',
-  viacep: 'https://viacep.com.br/ws/',
+            principal: host,
+      },
+  host,  
   version: controlVersion.version,
   origem: `Sistema Web - ${controlVersion.version}`,
   storageUserKey: '@mm3app:usuario',
